@@ -1,0 +1,947 @@
+{% extends "Index.html" %}
+
+{% block content %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path
+      d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+  </symbol>
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path
+      d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+  </symbol>
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path
+      d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+  </symbol>
+</svg>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+    <use xlink:href="#info-fill" />
+  </svg>
+  <div>
+    A continuación se muestra un test que se basa en la escala de Hamilton para medir el nivel de 
+    ansiedad y depresión. Se trata de una escala con 30 apartados y en cada pregunta ha de elegir 
+    una sola respuesta. Cada respuesta puntúa de 0 a 4 puntos.
+  </div>
+</div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Puntuación</th>
+      <th scope="col">Gravedad del cuadro de depresión y ansiedad</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>0-7</td>
+      <td>Estado normal</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>8-12</td>
+      <td>Depresión o ansiedad menor</td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>13-17</td>
+      <td>Menos que depresión y ansiedad mayor</td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>18-29</td>
+      <td>Depresión o ansiedad mayor</td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>30-52</td>
+      <td>Más que depresión o ansiedad mayor</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<legend>
+  <h2>
+    <div class="alert alert-info" role="alert"> Diagnostico para la detección de ansiedad y depresión</div>
+  </h2>
+</legend>
+
+<div id="quiz" class="float-sm-start">
+  <form id="formulario" action="/Test" method="POST">
+    <fieldset class="float-xl-start">
+      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+        <thead>
+          <h4>Ingresa tus datos</h4>
+          <tr>
+            <th scope="col">#</th>
+            <th colspan="8" class="text-center">Datos</th>
+          </tr>
+        </thead>
+        <thead>
+          <tr>
+            <th scope="row">*</th>
+            <td>Selecciona tu genero</td>
+            <td colspan="2"><input type="radio" name="Genero" value="Masculino"> Masculino</td>
+            <td colspan="4"> <input type="radio" name="Genero" value="Femenino"> Femenino</td>
+          </tr>
+
+          <tr>
+            <th scope="row">*</th>
+            <td>Selecciona tu edad</td>
+
+            <td><input type="radio" name="Edad" value="18-24 años"> 18-24 años</td>
+            <td><input type="radio" name="Edad" value="25-34 años"> 25-34 años</td>
+            <td><input type="radio" name="Edad" value="35-44 años"> 35-44 años</td>
+            <td><input type="radio" name="Edad" value="45-54 años"> 45-54 años</td>
+            <td><input type="radio" name="Edad" value="Más de 54 años"> Más de 54 años</td>
+          </tr>
+          </tbody>
+      </table>
+
+      <br><br>
+
+      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+        <thead>
+          <h4>¿Padece algunos de estos sintomas de la depresión?</h4>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Pregunta</th>
+            <th scope="col">Nunca</th>
+            <th scope="col">Leve</th>
+            <th scope="col">Poco</th>
+            <th scope="col">Mucho</th>
+            <th scope="col">Frecuentemente</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Humor depresivo (tristeza, desesperanza, desamparo, sentimiento de inutilidad)</td>
+            <td><input type="radio" name="Humordepresivo" value="0"> 0</td>
+            <td><input type="radio" name="Humordepresivo" value="1"> 1</td>
+            <td><input type="radio" name="Humordepresivo" value="2"> 2</td>
+            <td><input type="radio" name="Humordepresivo" value="3"> 3</td>
+            <td><input type="radio" name="Humordepresivo" value="4"> 4</td>
+          </tr>
+
+          <tr>
+            <th scope="row">2</th>
+            <td>Sentimiento de culpa</td>
+            <td><input type="radio" name="Sentimientoculpa" value="0"> 0</td>
+            <td><input type="radio" name="Sentimientoculpa" value="1"> 1</td>
+            <td><input type="radio" name="Sentimientoculpa" value="2"> 2</td>
+            <td><input type="radio" name="Sentimientoculpa" value="3"> 3</td>
+            <td><input type="radio" name="Sentimientoculpa" value="4"> 4</td>
+          </tr>
+
+          <tr>
+            <th scope="row">3</th>
+            <td>Suicidio</td>
+            <td><input type="radio" name="Suicidio" value="0"> 0</td>
+            <td><input type="radio" name="Suicidio" value="1"> 1</td>
+            <td><input type="radio" name="Suicidio" value="2"> 2</td>
+            <td><input type="radio" name="Suicidio" value="3"> 3</td>
+            <td><input type="radio" name="Suicidio" value="4"> 4</td>
+          </tr>
+
+          <tr>
+            <th scope="row">4</th>
+            <td>Insomnio precoz</td>
+            <td><input type="radio" name="Insomnioprecoz" value="0"> 0</td>
+            <td><input type="radio" name="Insomnioprecoz" value="1"> 1</td>
+            <td><input type="radio" name="Insomnioprecoz" value="2"> 2</td>
+            <td><input type="radio" name="Insomnioprecoz" value="3"> 3</td>
+            <td><input type="radio" name="Insomnioprecoz" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">5</th>
+            <td>Insomnio intermedio</td>
+            <td><input type="radio" name="Insomniointermedio" value="0"> 0</td>
+            <td><input type="radio" name="Insomniointermedio" value="1"> 1</td>
+            <td><input type="radio" name="Insomniointermedio" value="2"> 2</td>
+            <td><input type="radio" name="Insomniointermedio" value="3"> 3</td>
+            <td><input type="radio" name="Insomniointermedio" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">6</th>
+            <td>Insomnio tardio</td>
+            <td><input type="radio" name="Insomniotardio" value="0"> 0</td>
+            <td><input type="radio" name="Insomniotardio" value="1"> 1</td>
+            <td><input type="radio" name="Insomniotardio" value="2"> 2</td>
+            <td><input type="radio" name="Insomniotardio" value="3"> 3</td>
+            <td><input type="radio" name="Insomniotardio" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">7</th>
+            <td>Problemas de trabajo y actividades</td>
+            <td><input type="radio" name="Trabajoactividades" value="0"> 0</td>
+            <td><input type="radio" name="Trabajoactividades" value="1"> 1</td>
+            <td><input type="radio" name="Trabajoactividades" value="2"> 2</td>
+            <td><input type="radio" name="Trabajoactividades" value="3"> 3</td>
+            <td><input type="radio" name="Trabajoactividades" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">8</th>
+            <td>Inhibición psicomotora (lentitud de pensamiento y lenguaje, facultad de concentración disminuida,
+              disminución de la actividad motora)</td>
+            <td><input type="radio" name="Inhibicionpsicomotora" value="0"> 0</td>
+            <td><input type="radio" name="Inhibicionpsicomotora" value="1"> 1</td>
+            <td><input type="radio" name="Inhibicionpsicomotora" value="2"> 2</td>
+            <td><input type="radio" name="Inhibicionpsicomotora" value="3"> 3</td>
+            <td><input type="radio" name="Inhibicionpsicomotora" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">9</th>
+            <td>Agitación psicomotora</td>
+            <td><input type="radio" name="Agitacionpsicomotora" value="0"> 0</td>
+            <td><input type="radio" name="Agitacionpsicomotora" value="1"> 1</td>
+            <td><input type="radio" name="Agitacionpsicomotora" value="2"> 2</td>
+            <td><input type="radio" name="Agitacionpsicomotora" value="3"> 3</td>
+            <td><input type="radio" name="Agitacionpsicomotora" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">10</th>
+            <td>Ansiedad psíquica</td>
+            <td><input type="radio" name="Ansiedadpsiquica" value="0"> 0</td>
+            <td><input type="radio" name="Ansiedadpsiquica" value="1"> 1</td>
+            <td><input type="radio" name="Ansiedadpsiquica" value="2"> 2</td>
+            <td><input type="radio" name="Ansiedadpsiquica" value="3"> 3</td>
+            <td><input type="radio" name="Ansiedadpsiquica" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">11</th>
+            <td>Ansiedad somática (signos físicos de ansiedad: gastrointestinales: sequedad de boca, diarrea, eructos,
+              indigestión, etc;
+              cardiovaculares: palpitaciones, cefaleas; respiratorios: hiperventilación, suspiros; frecuencia de micción
+              incrementada; transpiración)</td>
+            <td><input type="radio" name="Ansiedadsomatica" value="0"> 0</td>
+            <td><input type="radio" name="Ansiedadsomatica" value="1"> 1</td>
+            <td><input type="radio" name="Ansiedadsomatica" value="2"> 2</td>
+            <td><input type="radio" name="Ansiedadsomatica" value="3"> 3</td>
+            <td><input type="radio" name="Ansiedadsomatica" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">12</th>
+            <td>Síntomas somáticos gastrointestinales</td>
+            <td><input type="radio" name="Somaticosgastrointestinales" value="0"> 0</td>
+            <td><input type="radio" name="Somaticosgastrointestinales" value="1"> 1</td>
+            <td><input type="radio" name="Somaticosgastrointestinales" value="2"> 2</td>
+            <td><input type="radio" name="Somaticosgastrointestinales" value="3"> 3</td>
+            <td><input type="radio" name="Somaticosgastrointestinales" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">13</th>
+            <td>Síntomas somáticos generales</td>
+            <td><input type="radio" name="Somaticosgenerales" value="0"> 0</td>
+            <td><input type="radio" name="Somaticosgenerales" value="1"> 1</td>
+            <td><input type="radio" name="Somaticosgenerales" value="2"> 2</td>
+            <td><input type="radio" name="Somaticosgenerales" value="3"> 3</td>
+            <td><input type="radio" name="Somaticosgenerales" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">14</th>
+            <td>Síntomas genitales (tales como: disminución de la libido y trastornos menstruales)</td>
+            <td><input type="radio" name="Genitales" value="0"> 0</td>
+            <td><input type="radio" name="Genitales" value="1"> 1</td>
+            <td><input type="radio" name="Genitales" value="2"> 2</td>
+            <td><input type="radio" name="Genitales" value="3"> 3</td>
+            <td><input type="radio" name="Genitales" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">15</th>
+            <td>Hipocondría</td>
+            <td><input type="radio" name="Hipocondria" value="0"> 0</td>
+            <td><input type="radio" name="Hipocondria" value="1"> 1</td>
+            <td><input type="radio" name="Hipocondria" value="2"> 2</td>
+            <td><input type="radio" name="Hipocondria" value="3"> 3</td>
+            <td><input type="radio" name="Hipocondria" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">16</th>
+            <td>Pérdida de peso</td>
+            <td><input type="radio" name="Peso" value="0"> 0</td>
+            <td><input type="radio" name="Peso" value="1"> 1</td>
+            <td><input type="radio" name="Peso" value="2"> 2</td>
+            <td><input type="radio" name="Peso" value="3"> 3</td>
+            <td><input type="radio" name="Peso" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">17</th>
+            <td>Introspección (insight)</td>
+            <td><input type="radio" name="Introspeccion" value="0"> 0</td>
+            <td><input type="radio" name="Introspeccion" value="1"> 1</td>
+            <td><input type="radio" name="Introspeccion" value="2"> 2</td>
+            <td><input type="radio" name="Introspeccion" value="3"> 3</td>
+            <td><input type="radio" name="Introspeccion" value="4"> 4</td>
+          </tr>
+
+
+        </tbody>
+      </table>
+      <br>
+
+    </fieldset>
+
+    <br>
+
+    <hr><br>
+
+    <!-- PARA LA ANSIEDAD -->
+
+    <fieldset class="float-sm-start">
+      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+        <thead>
+          <h4>¿Padece algunos de estos sintomas de la ansiedad?</h4>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Pregunta</th>
+            <th scope="col">Nunca</th>
+            <th scope="col">Leve</th>
+            <th scope="col">Poco</th>
+            <th scope="col">Mucho</th>
+            <th scope="col">Frecuentemente</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Estado de ánimo ansioso (Preocupaciones, anticipación de lo peor, apresión (anticipación
+              temerosa), irritabilidad)</td>
+            <td><input type="radio" name="Estadoansioso" value="0"> 0</td>
+            <td><input type="radio" name="Estadoansioso" value="1"> 1</td>
+            <td><input type="radio" name="Estadoansioso" value="2"> 2</td>
+            <td><input type="radio" name="Estadoansioso" value="3"> 3</td>
+            <td><input type="radio" name="Estadoansioso" value="4"> 4</td>
+          </tr>
+
+          <tr>
+            <th scope="row">2</th>
+            <td>Tensión (Sensación de tensión, imposibilidad de relajarse, reacciones con sobresalto, llanto fácil,
+              tamblores, sensación de inquietud)</td>
+            <td><input type="radio" name="Tension" value="0"> 0</td>
+            <td><input type="radio" name="Tension" value="1"> 1</td>
+            <td><input type="radio" name="Tension" value="2"> 2</td>
+            <td><input type="radio" name="Tension" value="3"> 3</td>
+            <td><input type="radio" name="Tension" value="4"> 4</td>
+          </tr>
+
+          <tr>
+            <th scope="row">3</th>
+            <td>Temores (A la oscuridad, a los desconocidos, a quedarse solo, a los animales grandes, al tráfico, a las
+              multitudes)</td>
+            <td><input type="radio" name="Temores" value="0"> 0</td>
+            <td><input type="radio" name="Temores" value="1"> 1</td>
+            <td><input type="radio" name="Temores" value="2"> 2</td>
+            <td><input type="radio" name="Temores" value="3"> 3</td>
+            <td><input type="radio" name="Temores" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">4</th>
+            <td>Insomnio (Dificultad para dormirse, sueño interrumpido, sueño insatisfactorio y cansancio al despertar)
+            </td>
+            <td><input type="radio" name="Insomnio" value="0"> 0</td>
+            <td><input type="radio" name="Insomnio" value="1"> 1</td>
+            <td><input type="radio" name="Insomnio" value="2"> 2</td>
+            <td><input type="radio" name="Insomnio" value="3"> 3</td>
+            <td><input type="radio" name="Insomnio" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">5</th>
+            <td>Intelectual (cognitivo) (Dificultad para concentrarse, mala memoria)</td>
+            <td><input type="radio" name="Intelectual" value="0"> 0</td>
+            <td><input type="radio" name="Intelectual" value="1"> 1</td>
+            <td><input type="radio" name="Intelectual" value="2"> 2</td>
+            <td><input type="radio" name="Intelectual" value="3"> 3</td>
+            <td><input type="radio" name="Intelectual" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">6</th>
+            <td>Estado de ánimo deprimido (Pérdida de interés, insatisfacción en las diversiones, depresión, despertar
+              prematuro, cambios de humor durante el día)</td>
+            <td><input type="radio" name="Estadodeprimido" value="0"> 0</td>
+            <td><input type="radio" name="Estadodeprimido" value="1"> 1</td>
+            <td><input type="radio" name="Estadodeprimido" value="2"> 2</td>
+            <td><input type="radio" name="Estadodeprimido" value="3"> 3</td>
+            <td><input type="radio" name="Estadodeprimido" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">7</th>
+            <td>Sintomas somáticos generales (musculares) (Dolores y molestias musculares, rigidez muscular,
+              contracciones musculares, sacudidad clónicas, crujir de dientes, voz temblorosa)</td>
+            <td><input type="radio" name="Musculares" value="0"> 0</td>
+            <td><input type="radio" name="Musculares" value="1"> 1</td>
+            <td><input type="radio" name="Musculares" value="2"> 2</td>
+            <td><input type="radio" name="Musculares" value="3"> 3</td>
+            <td><input type="radio" name="Musculares" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">8</th>
+            <td>Sintomas somáticos generales (sensoriales) (Zumbidos de oídos, visión borrosa, sofocos y escalofrios,
+              sensación de debilidad, sensacion de hormigueo)</td>
+            <td><input type="radio" name="Sensoriales" value="0"> 0</td>
+            <td><input type="radio" name="Sensoriales" value="1"> 1</td>
+            <td><input type="radio" name="Sensoriales" value="2"> 2</td>
+            <td><input type="radio" name="Sensoriales" value="3"> 3</td>
+            <td><input type="radio" name="Sensoriales" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">9</th>
+            <td>Sintomas cardiovasculares (Taquicardia, palpitaciones, dolor en el pecho, latidos vasculares, sensación
+              de desmayo, extrasistole)</td>
+            <td><input type="radio" name="Cardiovasculares" value="0"> 0</td>
+            <td><input type="radio" name="Cardiovasculares" value="1"> 1</td>
+            <td><input type="radio" name="Cardiovasculares" value="2"> 2</td>
+            <td><input type="radio" name="Cardiovasculares" value="3"> 3</td>
+            <td><input type="radio" name="Cardiovasculares" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">10</th>
+            <td>Sintomas respiratorios (Opresión o construcción en el pecho, sensación de ahogo, suspiros, disnea)</td>
+            <td><input type="radio" name="Respiratorios" value="0"> 0</td>
+            <td><input type="radio" name="Respiratorios" value="1"> 1</td>
+            <td><input type="radio" name="Respiratorios" value="2"> 2</td>
+            <td><input type="radio" name="Respiratorios" value="3"> 3</td>
+            <td><input type="radio" name="Respiratorios" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">11</th>
+            <td>Sintomas gastrointestinales (Dificultad para tragar, gases, dispepsia: dolor antes y despues de comer,
+              sensación de ardor, sensación de estómago lleno, vómitos acuosos, vómitos, sensación de estómago vacío,
+              digestión lenta, borbrigmos (ruido intestinal), diarea, pérdida de peso, estreñimiento)</td>
+            <td><input type="radio" name="Gastrointestinales" value="0"> 0</td>
+            <td><input type="radio" name="Gastrointestinales" value="1"> 1</td>
+            <td><input type="radio" name="Gastrointestinales" value="2"> 2</td>
+            <td><input type="radio" name="Gastrointestinales" value="3"> 3</td>
+            <td><input type="radio" name="Gastrointestinales" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">12</th>
+            <td>Sintomas genitourinarios (Micción frecuente, micción urgente, amenorrea, menorragia, aparición de la
+              frigidez, eyaculación precoz, ausencia de erección, impotencia)</td>
+            <td><input type="radio" name="Genitourinarios" value="0"> 0</td>
+            <td><input type="radio" name="Genitourinarios" value="1"> 1</td>
+            <td><input type="radio" name="Genitourinarios" value="2"> 2</td>
+            <td><input type="radio" name="Genitourinarios" value="3"> 3</td>
+            <td><input type="radio" name="Genitourinarios" value="4"> 4</td>
+          </tr>
+
+
+          <tr>
+            <th scope="row">13</th>
+            <td>Síntomas autónomos (Boca seca, rubor, palidez, tendencia a sudar, vértigos, cefaleas de tensión,
+              piloerección (pelos de punta))</td>
+            <td><input type="radio" name="Autonomos" value="0"> 0</td>
+            <td><input type="radio" name="Autonomos" value="1"> 1</td>
+            <td><input type="radio" name="Autonomos" value="2"> 2</td>
+            <td><input type="radio" name="Autonomos" value="3"> 3</td>
+            <td><input type="radio" name="Autonomos" value="4"> 4</td>
+          </tr>
+
+        </tbody>
+      </table>
+      <br>
+    </fieldset>
+
+
+    <br><br>
+
+    <div>
+      <button id="botonenviar" type="submit" onclick="">Generar Diagnostico</button>
+      <button id="Limpiar" type="reset">Limpiar Formulario</button>
+
+    </div>
+  </form>
+</div>
+<br>
+
+
+
+
+<script>
+  document.getElementById("quiz").addEventListener("submit", function (event) {
+    let hasError = false;
+    // obtenemos todos los input radio del grupo horario que esten chequeados
+    // si no hay ninguno lanzamos alerta
+    //Alertas de aviso para la Depresion
+    if (!document.querySelector('input[name="Genero"]:checked')) {
+      //alert('Error, rellena el campo Genero');
+      //Swal.fire('Error, rellena el campo Genero')
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu Genero!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Edad"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu Edad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Humordepresivo"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Sentimientoculpa"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Suicidio"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Insomnioprecoz"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Insomniointermedio"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Insomniotardio"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Trabajoactividades"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Inhibicionpsicomotora"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Agitacionpsicomotora"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Ansiedadpsiquica"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Ansiedadsomatica"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Somaticosgastrointestinales"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Somaticosgenerales"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Genitales"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 14 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Hipocondria"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 15 en los sintomas de depresion!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Peso"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 16 en los sintomas de depresion!'
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Introspeccion"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 17 en los sintomas de depresion!'
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    /*Para los sintomas de la ansiedad*/
+
+    if (!document.querySelector('input[name="Estadoansioso"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Tension"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Temores"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Insomnio"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Intelectual"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Estadodeprimido"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Musculares"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Sensoriales"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Cardiovasculares"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+    if (!document.querySelector('input[name="Respiratorios"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Gastrointestinales"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Genitourinarios"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+    if (!document.querySelector('input[name="Autonomos"]:checked')) {
+      Swal.fire({
+        icon: 'warning',
+        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de ansiedad!',
+      })
+      hasError = true;
+    }
+    // si hay algún error no efectuamos la acción submit del form
+    if (hasError) event.preventDefault();
+
+
+
+  });
+
+</script>
+
+<style>
+  body {
+    background-image: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    padding: 0px;
+    height: 10px;
+
+  }
+
+  #quiz {
+    justify-content: center;
+    align-items: center;
+    /*background: url(/static/img/Fondo.jpg) repeat;*/
+    background: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    width: 80%;
+    padding: 5%;
+    margin: 10%;
+    text-align: justify;
+    font-family: Arial, Helvetica, sans-serif;
+
+
+    padding: 3px 10px;
+    /* border: black 5px solid;*/
+    border-radius: 20px;
+
+  }
+
+  #botonenviar {
+    background-color: #ffffff;
+    color: black;
+    width: 250px;
+    font-size: 20px;
+    border-radius: 0.3rem;
+    padding: 10px 20px;
+    margin: 10px 4px 10px;
+    outline: 0;
+
+
+  }
+
+  #botonenviar:hover {
+    /*opacity: 0.5;*/
+    cursor: pointer !important;
+    background: #4ab4ff;
+  }
+
+  h2 {
+    font-size: 50px;
+    text-align: center;
+  }
+
+  h4 {
+    font-size: 20px;
+    text-align: justify;
+  }
+
+
+  #Limpiar {
+    background-color: #ffffff;
+    color: black;
+    width: 250px;
+    font-size: 20px;
+    border-radius: 0.3rem;
+    padding: 10px 20px;
+    margin: 10px 4px 10px;
+    outline: 0;
+  }
+
+  #Limpiar:hover {
+    /*opacity: 0.5;*/
+    cursor: pointer !important;
+    background: #4ab4ff;
+  }
+</style>
+
+{% endblock %}

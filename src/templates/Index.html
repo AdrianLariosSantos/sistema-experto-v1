@@ -1,0 +1,80 @@
+<!doctype html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.all.min.js"></script>
+  <script src="{{ url_for('static', filename='js/validacion.js') }}"></script>
+  <link rel="script" href="{{ url_for('static', filename='js/validacion.js') }}">
+  <!-- <link rel="stylesheet" href="/static/css/index.css"> -->
+  <title>Sistema Experto Para el Apoyo de Detección de Ansiedad y Depresion</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light p-3 fw-bold" style="background-color: #e3f2fd;" id="menu">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/Test">Test</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% block content %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>¡Atención!</strong> Esta aplicación es un apoyo al diagnostico para la depresión y ansiedad, más nunca reemplazara a un el diagnostico y tratamiento de un especialista. Consulte a su médico.
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  <br><br>
+ 
+  <section class="w-100">
+    <div class="row w-75 mx-auto" id="servicios-fila-1">
+      <div class="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-start my-5 icono-wrap">
+        <img src="{{ url_for('static', filename='img/satisfaccion.png') }}" alt="desarrollo" width="180" height="160">
+        <div>
+          <h3 class="fs-5 mt-4 px-4 pb-1">Test</h3>
+          <p class="px-3">Contesta un Test que genera un diagnostico sobre el trastorno mental que padeces (Ansiedad-Depresión)</p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12 col-sm-12 d-flex justify-content-start  my-5 icono-wrap">
+        <img src="{{ url_for('static', filename='img/cuidado.png') }}" alt="concepto" width="180" height="160">
+
+        <div>
+          <h3 class="fs-5 mt-4 px-4 pb-1 icono-wrap">Ayuda</h3>
+          <p class="px-3">Solicita ayuda de especialistas que pueden tratar tu trastorno mental.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--========================================================== -->
+  <!--========================================================== -->
+<br><br><br><br><br><br><br><br><br><br><br>
+  {% endblock %}
+  <!-- Inicio del footer -->
+  <footer class="w-100  d-flex  align-items-center justify-content-center flex-wrap" style="background-color: #e3f2fd; position: relative; bottom: 0; margin: 0;">
+    <p class="fs-5 px-3  pt-3">&copy; Todos Los Derechos Reservados 2022</p>
+  </footer>
+  <!-- Fin de footer -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+</body>
+</html>

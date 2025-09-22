@@ -1,0 +1,275 @@
+{% extends "Index.html" %}
+
+{% block content %}
+<!-- <h1 style="text-align: center;">Seccion de ayuda</h1> -->
+<div class="alert alert-warning" role="alert"
+    style="text-align: center; font-weight: bold; color: black; font-size: 2rem;">
+    Resultado del Diagnostico
+</div>
+
+
+<!--<h3>{{Resultado_Final}}</h3>-->
+
+{% if Resultado_Final == "Depresion" %}
+
+<!--<h2>{{Resultado_Final}}</h2>-->
+
+<div style=" display: flex; align-items: center; justify-content: center;">
+
+    <div class="card border-success mb-5" style="max-width: 80rem;">
+
+        <div class="card-header text-center card-body text-danger">
+            <h2 class="card-title"> {{Resultado_Final}} </h2>
+        </div>
+
+        <div class="card-body text-success text-center">
+            <p class="card-text">
+            <h3>Consejos</h3> <br>
+
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" style="text-align: justify;  color:black;">1. Habla
+                    y desahógate.
+                    Elige a un amigo/a o familiar de confianza como confidente, y cuéntale cómo te sientes.
+                    Pero ten en cuenta que ellos sufren por ti, por lo que es importante que busques a un
+                    profesional sanitario o psicólogo para que intente ayudarte.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">2. No tomes decisiones
+                    precipitadas.
+                    Aplaza las decisiones importantes, como puede ser un divorcio, un cambio de empleo
+                    o contraer matrimonio, hasta que te sientas mejor. Y de nuevo, habla sobre ellas con
+                    otras personas que conozcan y tengan una visión objetiva de la situación. Otra opción
+                    es escribir en un papel cómo te sientes o qué te preocupa: expresarlo en palabras te
+                    ayudará reflexionar sobre ello y a ponerlo en perspectiva.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">3. Sé sincero.
+                    Tanto contigo mismo como con el profesional que te ayude a afrontar tu depresión. No temas
+                    contarle tus preocupaciones y miedos ni preguntarle todo lo que necesites. Exprésale de manera
+                    franca todo lo que sientes, porque así podrá ayudarte mejor.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">4. Piensa en positivo.
+                    Mantén la esperanza, muchísimas personas han superado este problema. Plantéate metas realistas y
+                    no seas impaciente: la depresión no desaparecerá de manera súbita, sino que, poco a poco, los
+                    pensamientos positivos irán reemplazando a los negativos.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">5. No te encierres en
+                    ti mismo.
+                    No te aísles. Aunque no tengas muchas ganas, intenta seguir relacionándote con tus amigos o
+                    familiares, pasa
+                    tiempo con ellos y mantén tus actividades de ocio habituales siempre que sea posible. Seguir activo
+                    te ayudará
+                    a conservar una actitud positiva.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">6. Muévete.
+                    Haz deporte, da un paseo o practica otro tipo de actividades de ocio -como ir al cine
+                    o participar en eventos sociales- con las que antes disfrutaras. Respirar aire puro y
+                    el movimiento te ayudarán a sentirte mejor física y emocionalmente. También es muy
+                    aconsejable que alguna de estas actividades sean en compañía.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">7. Come y duerme bien.
+                    Aunque no sientas apetito, no descuides lo que comes. Una dieta variada y equilibrada, rica en
+                    frutas
+                    y verduras, te hará sentirte más fuerte. Así mismo, mantener unos horarios regulares de sueño te
+                    ayudará
+                    a sentirte más reposado. Si no logras conciliar el sueño, acuéstate igualmente y escucha la radio o
+                    ve la
+                    televisión, al menos tu cuerpo descansará. Frecuentemente, durante el tratamiento de la depresión,
+                    el sueño
+                    y el apetito comenzarán a mejorar antes de que su estado de ánimo deprimido desaparezca.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">8. Intenta evitar el
+                    estrés.
+                    En el día a día, clasifica las tareas en grandes y pequeñas y establece prioridades para cometer lo
+                    que
+                    tienes que hacer sin agobiarte. Recuerda que no pasa nada si no llegas a todo.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">9. No abuses del
+                    alcohol u otras drogas.
+                    No caigas en la tentación de recurrir al alcohol o a otras drogas para sentirte mejor, pues, una vez
+                    se haya disipado
+                    el efecto de relajación o euforia que provocan estas sustancias, los sentimientos de tristeza y
+                    desesperanza se volverán
+                    más intensos.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">10. Cumple el tratamiento
+                    médico.
+                    Acude a todas las citas que tengas con tu doctor, bien sea el psicólogo, el médico de cabecera o un
+                    especialista.
+                    Sigue sus recomendaciones y, en caso de que te prescriba antidepresivos, es muy importante que sigas
+                    las instrucciones,
+                    que tomes todas las dosis con exactitud y que no interrumpas el tratamiento por tu cuenta.
+                </li>
+            </ul>
+            </p>
+        </div>
+    </div>
+</div>
+
+{% else %}
+
+<!--En caso de que el resultado sea ansiedad-->
+<div style=" display: flex; align-items: center; justify-content: center;">
+
+    <div class="card border-success mb-5" style="max-width: 80rem;">
+
+        <div class="card-header text-center card-body text-danger">
+            <h2 class="card-title"> {{Resultado_Final}} </h2>
+        </div>
+
+        <div class="card-body text-success text-center">
+            <p class="card-text">
+            <h3>Consejos</h3> <br>
+
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success" style="text-align: justify;  color:black;">1.
+                    Ejercicio
+                    El ejercicio es una de las cosas más importantes que puedes hacer para combatir el estrés.
+                    Puede parecer contradictorio, pero poner el cuerpo en estrés físico mediante el ejercicio puede
+                    aliviar el estrés mental.
+                    Los beneficios son mayores cuando haces ejercicio regularmente. Las personas que se ejercitan
+                    regularmente tienen menos
+                    probabilidad de experimentar ansiedad que aquellas que no lo hacen.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">2. Considera los
+                    suplementos
+                    Varios suplementos promueven la reducción del estrés y la ansiedad. Algunos suplementos pueden
+                    interactuar
+                    con los medicamentos o tener efectos secundarios, así que deberías consultar con un médico si tienes
+                    alguna afección.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">3. Enciende una vela
+                    Los aceites esenciales o prender una vela aromática pueden ayudar a reducir tu sensación de estrés o
+                    ansiedad.
+
+                    Algunos aromas son especialmente calmantes. Aquí puedes ver una lista de los aromas que más calman:
+
+                    lavanda
+                    rosas
+                    vetiver
+                    bergamota
+                    camomila romana
+                    flores de naranja
+                    incienso
+                    sándalo
+                    ylang ylang
+                    naranja o flor de azahar
+                    geranio
+
+                    Utilizar aromas para tratar tu estado de ánimo se llama aromaterapia. Varios estudios demuestran que
+                    la aromaterapia
+                    puede disminuir la ansiedad y mejorar el sueño.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">4. Reduce tu ingesta de
+                    cafeína
+                    La cafeína es un estimulante que se encuentra en el café, té, chocolate y en las bebidas
+                    energizantes.
+                    Altas dosis pueden incrementar la ansiedad. Las personas tienen diferentes umbrales para la cantidad
+                    de
+                    cafeína que pueden tolerar. Si observas que la cafeína te pone nervioso o ansioso, considera dejar
+                    de
+                    consumirla. Aunque muchos estudios demuestran que el café puede ser saludable con moderación, esto
+                    no aplica
+                    para todos. En general, cinco o menos tazas al día se consideran una cantidad moderada.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">5. Toma nota
+                    Una manera de manejar el estrés es anotar las cosas. Aunque registrar lo que te estresa es
+                    una forma de enfocarse, otra es tomar nota de las cosas por las que estás agradecido.
+                    La gratitud puede ayudar a aliviar el estrés y la ansiedad al enfocar tus pensamientos en
+                    las cosas positivas de tu vida. Compra periódicos en línea.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">6. Masticar goma de
+                    mascar
+                    Para un alivio del estrés súper fácil y rápido prueba masticar una barra de goma de mascar. Un
+                    estudio
+                    demostró que las personas que masticaron goma de mascar tenían un mayor sentido de bienestar y menor
+                    estrés.
+                    Una explicación es que masticar goma de mascar ocasiona ondas cerebrales similares a las de las
+                    personas relajadas.
+                    Otra es que masticar goma de mascar promueve el flujo de sangre a tu cerebro. Adicionalmente, un
+                    estudio reciente
+                    demostró que el alivio del estrés era mayor cuando las personas masticaban con más fuerza.
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">7. Pasa tiempo con tus
+                    amigos y familiares
+                    El apoyo social de los amigos y la familia puede ayudarte a sobrellevar los momentos estresantes.
+                    Ser parte de una red
+                    de amigos te da sensación de pertenencia y autoestima, lo que puede ayudarte en momentos difíciles.
+                    Un estudio determinó
+                    que, para las mujeres en particular, pasar tiempo con los amigos y los hijos ayuda a liberar
+                    oxitocina, un relajante natural.
+                    Este efecto se llama “cuidar y hacer amigos” y es contrario a la respuesta de lucha o huida. Ten
+                    presente que tanto los hombres
+                    como las mujeres se benefician de la amistad. Otro estudio determinó que los hombres y las mujeres
+                    con menos relaciones sociales
+                    tenían más probabilidad de sufrir depresión y ansiedad.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">8. Ríe
+                    Es difícil sentir ansiedad cuando te ríes. Es bueno para tu salud y existen algunas
+                    formas en que puede ayudar a liberar el estrés: Reduce tu respuesta al estrés. Reduce
+                    la tensión al relajar tus músculos. A largo plazo, la risa también puede ayudarte a
+                    mejorar tu sistema inmunitario y tu estado de ánimo. Un estudio entre personas con cáncer
+                    determinó que las personas en el grupo de la risa experimentaron mayor reducción del estrés
+                    que las que simplemente estaban distraídas. Intenta ver un programa de televisión divertido
+                    o pasar tiempo con amigos que te hagan reír.
+                </li>
+
+
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">9. Toma una clase de
+                    yoga
+                    El yoga se ha convertido en un método popular para aliviar el estrés y hacer ejercicio entre las
+                    personas
+                    de todas las edades. Aunque los estilos de yoga difieren, la mayoría tienen un objetivo en común:
+                    unir cuerpo
+                    y mente. El yoga principalmente logra esto al incrementar la conciencia del cuerpo y la respiración.
+                    Algunos
+                    estudios han examinado el efecto del yoga en la salud mental. En general, las investigaciones han
+                    determinado
+                    que el yoga puede mejorar el estado de ánimo e incluso puede ser tan efectivo como los medicamentos
+                    antidepresivos
+                    para tratar la depresión y la ansiedad.
+                </li>
+
+                <li class="list-group-item list-group-item-light" style="text-align: justify;">10. Escucha música
+                    relajante
+                    Escuchar música puede tener un efecto muy relajante en el cuerpo. La música instrumental lenta puede
+                    inducir
+                    una respuesta de relajación al ayudar a reducir la presión arterial y el ritmo cardíaco, al igual
+                    que las
+                    hormonas del estrés. Algunos tipos de música clásica, celta, nativo americana e india pueden ser
+                    particularmente
+                    relajantes. Sin embargo, simplemente escuchar la música que te gusta también es efectivo.
+                    Los sonidos de la naturaleza también son muy tranquilizantes. Por esa razón con frecuencia se
+                    incorporan estos
+                    sonidos en la música para relajación y meditación.
+                </li>
+            </ul>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}
