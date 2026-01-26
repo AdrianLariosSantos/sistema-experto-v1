@@ -558,354 +558,73 @@
 
 
 <script>
-  document.getElementById("quiz").addEventListener("submit", function (event) {
-    let hasError = false;
-    // obtenemos todos los input radio del grupo horario que esten chequeados
-    // si no hay ninguno lanzamos alerta
-    //Alertas de aviso para la Depresion
-    if (!document.querySelector('input[name="Genero"]:checked')) {
-      //alert('Error, rellena el campo Genero');
-      //Swal.fire('Error, rellena el campo Genero')
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu Genero!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
+  (function () {
+    const form = document.getElementById("formulario");
+    const submitBtn = document.getElementById("botonenviar");
+    const requiredGroups = [
+      { name: "Genero", label: "Género" },
+      { name: "Edad", label: "Rango de edad" },
 
-    if (!document.querySelector('input[name="Edad"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu Edad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
+      { name: "Humordepresivo", label: "Depresión (pregunta 1)" },
+      { name: "Sentimientoculpa", label: "Depresión (pregunta 2)" },
+      { name: "Suicidio", label: "Depresión (pregunta 3)" },
+      { name: "Insomnioprecoz", label: "Depresión (pregunta 4)" },
+      { name: "Insomniointermedio", label: "Depresión (pregunta 5)" },
+      { name: "Insomniotardio", label: "Depresión (pregunta 6)" },
+      { name: "Trabajoactividades", label: "Depresión (pregunta 7)" },
+      { name: "Inhibicionpsicomotora", label: "Depresión (pregunta 8)" },
+      { name: "Agitacionpsicomotora", label: "Depresión (pregunta 9)" },
+      { name: "Ansiedadpsiquica", label: "Depresión (pregunta 10)" },
+      { name: "Ansiedadsomatica", label: "Depresión (pregunta 11)" },
+      { name: "Somaticosgastrointestinales", label: "Depresión (pregunta 12)" },
+      { name: "Somaticosgenerales", label: "Depresión (pregunta 13)" },
+      { name: "Genitales", label: "Depresión (pregunta 14)" },
+      { name: "Hipocondria", label: "Depresión (pregunta 15)" },
+      { name: "Peso", label: "Depresión (pregunta 16)" },
+      { name: "Introspeccion", label: "Depresión (pregunta 17)" },
 
+      { name: "Estadoansioso", label: "Ansiedad (pregunta 1)" },
+      { name: "Tension", label: "Ansiedad (pregunta 2)" },
+      { name: "Temores", label: "Ansiedad (pregunta 3)" },
+      { name: "Insomnio", label: "Ansiedad (pregunta 4)" },
+      { name: "Intelectual", label: "Ansiedad (pregunta 5)" },
+      { name: "Estadodeprimido", label: "Ansiedad (pregunta 6)" },
+      { name: "Musculares", label: "Ansiedad (pregunta 7)" },
+      { name: "Sensoriales", label: "Ansiedad (pregunta 8)" },
+      { name: "Cardiovasculares", label: "Ansiedad (pregunta 9)" },
+      { name: "Respiratorios", label: "Ansiedad (pregunta 10)" },
+      { name: "Gastrointestinales", label: "Ansiedad (pregunta 11)" },
+      { name: "Genitourinarios", label: "Ansiedad (pregunta 12)" },
+      { name: "Autonomos", label: "Ansiedad (pregunta 13)" },
+    ];
 
-    if (!document.querySelector('input[name="Humordepresivo"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
+    const getMissing = () => requiredGroups.find(group => !document.querySelector(`input[name="${group.name}"]:checked`));
 
+    form.addEventListener("submit", function (event) {
+      const missing = getMissing();
+      if (missing) {
+        event.preventDefault();
+        Swal.fire({
+          icon: "warning",
+          title: "Falta una respuesta",
+          text: `Por favor selecciona una opción en: ${missing.label}.`,
+        });
 
-    if (!document.querySelector('input[name="Sentimientoculpa"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
+        const firstInput = document.querySelector(`input[name="${missing.name}"]`);
+        if (firstInput) {
+          firstInput.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstInput.focus();
+        }
+        return;
+      }
 
-    if (!document.querySelector('input[name="Suicidio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Insomnioprecoz"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Insomniointermedio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Insomniotardio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Trabajoactividades"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Inhibicionpsicomotora"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Agitacionpsicomotora"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Ansiedadpsiquica"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Ansiedadsomatica"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Somaticosgastrointestinales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Somaticosgenerales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Genitales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 14 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Hipocondria"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 15 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Peso"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 16 en los sintomas de depresion!'
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Introspeccion"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 17 en los sintomas de depresion!'
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    /*Para los sintomas de la ansiedad*/
-
-    if (!document.querySelector('input[name="Estadoansioso"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Tension"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Temores"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Insomnio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Intelectual"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Estadodeprimido"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Musculares"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Sensoriales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Cardiovasculares"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Respiratorios"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Gastrointestinales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Genitourinarios"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Autonomos"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-
-  });
-
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Procesando...";
+        submitBtn.classList.add("opacity-70", "cursor-not-allowed");
+      }
+    });
+  })();
 </script>
 
 </section>
