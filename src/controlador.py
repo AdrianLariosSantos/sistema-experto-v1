@@ -1,24 +1,29 @@
 #Importación de los modulos
+import os
 from flask import Flask, redirect, url_for, render_template, request, make_response
 from flask_mysqldb import MySQL
-from flask.templating import render_template_string
+try:
+    from dotenv import load_dotenv
+except Exception:
+    try:
+        from dotenv.main import load_dotenv
+    except Exception as exc:
+        raise RuntimeError(
+            "No se encontró load_dotenv. Instala 'python-dotenv' y desinstala el paquete 'dotenv' si existe."
+        ) from exc
 from AlgoritmoBayes import *
 #import matplotlib.pyplot as plt
 
-string_connection = 'mysql+pymysql://root@localhost:3306/escalahamilton'
-connection = create_engine(string_connection)
-sql = 'SELECT * FROM conocimiento'
-datos = pd.read_sql_query(sql, connection)
-df = pd.DataFrame(datos)
-print(df)
+load_dotenv()
 
 app = Flask(__name__)
 
 # Estableciendo la conexion con la base de datos.
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'escalahamilton'
+app.config['MYSQL_HOST'] = os.getenv('DB_HOST', 'localhost')
+app.config['MYSQL_USER'] = os.getenv('DB_USER', 'root')
+app.config['MYSQL_PASSWORD'] = os.getenv('DB_PASSWORD', '')
+app.config['MYSQL_DB'] = os.getenv('DB_NAME', 'escalahamilton')
+app.config['MYSQL_PORT'] = int(os.getenv('DB_PORT', '3306'))
 
 mysql = MySQL(app)
 
@@ -75,15 +80,11 @@ def test():
         ListaPC1 = []
         ListaPC2 = []
 
-        clase_Depresion(humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales,
-                        genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos)
         ListaPC1.append(clase_Depresion(humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales,
-                        genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos))
+                genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos))
 
-        clase_Ansiedad(humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales,
-                       genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos)
         ListaPC2.append(clase_Ansiedad(humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales,
-                        genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos))
+                genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos))
 
         print("\n\nEl valor de P(C1) es: {}".format(ListaPC1),
               "\n\nEl valor del P(C2) es: {}".format(ListaPC2))
@@ -113,12 +114,15 @@ def test():
 
         # Se realiza la conexion.
         cur = mysql.connection.cursor()
-        # Se executa el comando insert para guardar los nuevos datos introducidos por el usuario
-        cur.execute('INSERT INTO conocimiento (Genero, Edad, Humor, Culpa, Suicidio, IPrecoz, IIntermedio, ITardio, Trabajo, Inhibicion, Agitacion, APsiquica, ASomatica, SGastrointestinales, SGenerales, SGenitales, Hipocondria, Peso, Introspeccion, AnimoAnsioso, Tension, Temores, Insomnio, Intelectual, AnimoDeprimido, SomaticosMusculares, SomaticosSensoriales, Cardiovasculares, Respiratorios, Gastrointestinales, Genitourinarios, Autonomos, Clase) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s)',
-                    (genero, edad, humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales, genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos, Resultado_Final))
+        try:
+            # Se executa el comando insert para guardar los nuevos datos introducidos por el usuario
+            cur.execute('INSERT INTO conocimiento (Genero, Edad, Humor, Culpa, Suicidio, IPrecoz, IIntermedio, ITardio, Trabajo, Inhibicion, Agitacion, APsiquica, ASomatica, SGastrointestinales, SGenerales, SGenitales, Hipocondria, Peso, Introspeccion, AnimoAnsioso, Tension, Temores, Insomnio, Intelectual, AnimoDeprimido, SomaticosMusculares, SomaticosSensoriales, Cardiovasculares, Respiratorios, Gastrointestinales, Genitourinarios, Autonomos, Clase) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s)',
+                        (genero, edad, humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales, genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos, Resultado_Final))
 
-        # Se ejecuta con el comando con el metodo commit
-        mysql.connection.commit()
+            # Se ejecuta con el comando con el metodo commit
+            mysql.connection.commit()
+        finally:
+            cur.close()
         
         return render_template('Ayuda.html', Resultado_Final = Resultado_Final)
         
@@ -128,7 +132,7 @@ def test():
 
 
 @app.route('/Ayuda')
-def ayuda(Resultado_Final):
+def ayuda():
     return render_template('Ayuda.html')
 
 
