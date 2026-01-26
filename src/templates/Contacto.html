@@ -13,54 +13,149 @@
     </div>
   </div>
 
-  <div class="grid gap-6 md:grid-cols-2">
-    <div class="section-card">
-      <h3 class="section-title">Información de contacto</h3>
-      <p class="section-subtitle">Atención personalizada y confidencial.</p>
-      <div class="mt-4 space-y-3 text-sm text-slate-600">
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-sky-500"></span>
-          Teléfono: (000) 000-0000
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
-          WhatsApp: +52 000 000 0000
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-amber-500"></span>
-          Correo: contacto@clinica.com
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-slate-400"></span>
-          Dirección: Av. Principal 123, Ciudad
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full bg-slate-400"></span>
-          Horario: Lun–Vie 9:00–19:00 | Sáb 9:00–14:00
-        </div>
-      </div>
-    </div>
+  <div class="section-card">
+    <h3 class="section-title">Profesionales disponibles</h3>
+    <p class="section-subtitle">Selecciona a tu especialista y agenda directamente por su WhatsApp.</p>
+    <div class="mt-5 grid gap-4 lg:grid-cols-2">
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-mariana-lopez.jpg"
+              alt="Foto de la psicóloga Mariana López"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Mariana López</p>
+              <p class="text-xs text-slate-500">Terapia cognitivo-conductual · Ansiedad y depresión</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Av. Reforma 250, Consultorio 3
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 55 1111 2222
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Vie 9:00–15:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+525511112222">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/525511112222" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
 
-    <div class="section-card">
-      <h3 class="section-title">Profesionales disponibles</h3>
-      <p class="section-subtitle">Próximamente podrás ver el perfil de cada especialista.</p>
-      <div class="mt-4 grid gap-3">
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-          <p class="text-sm font-semibold text-slate-800">Psic. Nombre Apellido</p>
-          <p class="text-xs text-slate-500">Terapia cognitivo-conductual</p>
-        </div>
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-          <p class="text-sm font-semibold text-slate-800">Psic. Nombre Apellido</p>
-          <p class="text-xs text-slate-500">Terapia familiar y de pareja</p>
-        </div>
-        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-4">
-          <p class="text-sm font-semibold text-slate-800">Psic. Nombre Apellido</p>
-          <p class="text-xs text-slate-500">Intervención en crisis</p>
-        </div>
-      </div>
-      <div class="mt-4 flex flex-wrap gap-3">
-        <button class="btn-secondary" type="button">Agregar psicólogos</button>
-      </div>
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologo-daniel-hernandez.jpg"
+              alt="Foto del psicólogo Daniel Hernández"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Daniel Hernández</p>
+              <p class="text-xs text-slate-500">Terapia familiar y de pareja · Adolescencia</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Calle Norte 18, Piso 2
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 33 4444 5555
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Mar–Sáb 10:00–18:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+523344445555">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/523344445555" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-valeria-cruz.jpg"
+              alt="Foto de la psicóloga Valeria Cruz"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Valeria Cruz</p>
+              <p class="text-xs text-slate-500">Intervención en crisis · Manejo del estrés</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Blvd. Central 501, Consultorio 8
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 81 7777 8888
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Vie 12:00–20:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+528177778888">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/528177778888" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-carla-jimenez.jpg"
+              alt="Foto de la psicóloga Carla Jiménez"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Carla Jiménez</p>
+              <p class="text-xs text-slate-500">Psicoeducación · Atención integral</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Plaza Sur 22, Torre B
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 55 9999 0000
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Sáb 8:00–14:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+525599990000">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/525599990000" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
     </div>
   </div>
 
