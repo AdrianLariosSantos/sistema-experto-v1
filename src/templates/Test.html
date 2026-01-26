@@ -2,6 +2,32 @@
 
 {% block content %}
 
+<section class="space-y-8">
+
+<div class="section-card bg-gradient-to-br from-white to-sky-50">
+  <div class="section-header">
+    <div class="space-y-2">
+      <span class="pill">Test de Hamilton</span>
+      <h2>Evaluación de ansiedad y depresión</h2>
+      <p class="text-slate-600">Completa el cuestionario con honestidad. Los resultados son orientativos y no sustituyen atención profesional.</p>
+    </div>
+    <div class="grid gap-2 text-sm text-slate-600">
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+        Tiempo estimado: 6-8 minutos
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+        Escala: 0 (Nunca) a 4 (Frecuentemente)
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+        Responde una opción por pregunta
+      </div>
+    </div>
+  </div>
+</div>
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
     <path
@@ -22,19 +48,25 @@
     <use xlink:href="#info-fill" />
   </svg>
   <div>
-    A continuación se muestra un test que se basa en la escala de Hamilton para medir el nivel de 
-    ansiedad y depresión. Se trata de una escala con 30 apartados y en cada pregunta ha de elegir 
-    una sola respuesta. Cada respuesta puntúa de 0 a 4 puntos.
+    A continuación encontrarás una evaluación basada en la escala de Hamilton para medir el nivel de
+    ansiedad y depresión. Responde una sola opción por pregunta. Cada respuesta puntúa de 0 a 4.
   </div>
 </div>
-</div>
 
-<table class="table table-striped">
+<div class="section-card">
+  <div class="section-header">
+    <div>
+      <h3 class="section-title">Guía de interpretación</h3>
+      <p class="section-subtitle">Consulta el rango de puntuación y su gravedad estimada.</p>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Puntuación</th>
-      <th scope="col">Gravedad del cuadro de depresión y ansiedad</th>
+      <th scope="col">Gravedad estimada</th>
     </tr>
   </thead>
   <tbody>
@@ -51,7 +83,7 @@
     <tr>
       <th scope="row">3</th>
       <td>13-17</td>
-      <td>Menos que depresión y ansiedad mayor</td>
+      <td>Menor que depresión o ansiedad mayor</td>
     </tr>
     <tr>
       <th scope="row">4</th>
@@ -64,20 +96,27 @@
       <td>Más que depresión o ansiedad mayor</td>
     </tr>
   </tbody>
-</table>
-<br>
-<legend>
-  <h2>
-    <div class="alert alert-info" role="alert"> Diagnostico para la detección de ansiedad y depresión</div>
-  </h2>
-</legend>
+    </table>
+  </div>
+</div>
 
-<div id="quiz" class="float-sm-start">
-  <form id="formulario" action="/Test" method="POST">
-    <fieldset class="float-xl-start">
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+<div class="alert alert-info text-center text-xl font-semibold" role="alert">
+  Evaluación para la detección de ansiedad y depresión
+</div>
+
+<div id="quiz" class="space-y-6">
+  <form id="formulario" action="/Test" method="POST" class="space-y-6">
+    <fieldset class="space-y-8">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Datos generales</h3>
+            <p class="section-subtitle">Campos requeridos para interpretar la evaluación.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered">
         <thead>
-          <h4>Ingresa tus datos</h4>
           <tr>
             <th scope="col">#</th>
             <th colspan="8" class="text-center">Datos</th>
@@ -86,14 +125,14 @@
         <thead>
           <tr>
             <th scope="row">*</th>
-            <td>Selecciona tu genero</td>
+            <td>Selecciona tu género</td>
             <td colspan="2"><input type="radio" name="Genero" value="Masculino"> Masculino</td>
             <td colspan="4"> <input type="radio" name="Genero" value="Femenino"> Femenino</td>
           </tr>
 
           <tr>
             <th scope="row">*</th>
-            <td>Selecciona tu edad</td>
+            <td>Selecciona tu rango de edad</td>
 
             <td><input type="radio" name="Edad" value="18-24 años"> 18-24 años</td>
             <td><input type="radio" name="Edad" value="25-34 años"> 25-34 años</td>
@@ -102,13 +141,20 @@
             <td><input type="radio" name="Edad" value="Más de 54 años"> Más de 54 años</td>
           </tr>
           </tbody>
-      </table>
+          </table>
+        </div>
+      </div>
 
-      <br><br>
-
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Síntomas de depresión</h3>
+            <p class="section-subtitle">Indica la intensidad con la que lo has percibido.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered">
         <thead>
-          <h4>¿Padece algunos de estos sintomas de la depresión?</h4>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Pregunta</th>
@@ -310,21 +356,25 @@
 
 
         </tbody>
-      </table>
-      <br>
+          </table>
+        </div>
+      </div>
 
     </fieldset>
 
-    <br>
-
-    <hr><br>
-
     <!-- PARA LA ANSIEDAD -->
 
-    <fieldset class="float-sm-start">
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+    <fieldset class="space-y-8">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Síntomas de ansiedad</h3>
+            <p class="section-subtitle">Indica la intensidad con la que lo has percibido.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered">
         <thead>
-          <h4>¿Padece algunos de estos sintomas de la ansiedad?</h4>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Pregunta</th>
@@ -490,17 +540,15 @@
           </tr>
 
         </tbody>
-      </table>
-      <br>
+          </table>
+        </div>
+      </div>
     </fieldset>
 
 
-    <br><br>
-
-    <div>
-      <button id="botonenviar" type="submit" onclick="">Generar Diagnostico</button>
-      <button id="Limpiar" type="reset">Limpiar Formulario</button>
-
+    <div class="flex flex-wrap gap-3 pt-2">
+      <button id="botonenviar" class="btn-primary" type="submit" onclick="">Generar Diagnóstico</button>
+      <button id="Limpiar" class="btn-secondary" type="reset">Limpiar formulario</button>
     </div>
   </form>
 </div>
@@ -860,88 +908,5 @@
 
 </script>
 
-<style>
-  body {
-    background-image: white;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    align-items: center;
-    justify-content: center;
-    margin: 0px;
-    padding: 0px;
-    height: 10px;
-
-  }
-
-  #quiz {
-    justify-content: center;
-    align-items: center;
-    /*background: url(/static/img/Fondo.jpg) repeat;*/
-    background: white;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    width: 80%;
-    padding: 5%;
-    margin: 10%;
-    text-align: justify;
-    font-family: Arial, Helvetica, sans-serif;
-
-
-    padding: 3px 10px;
-    /* border: black 5px solid;*/
-    border-radius: 20px;
-
-  }
-
-  #botonenviar {
-    background-color: #ffffff;
-    color: black;
-    width: 250px;
-    font-size: 20px;
-    border-radius: 0.3rem;
-    padding: 10px 20px;
-    margin: 10px 4px 10px;
-    outline: 0;
-
-
-  }
-
-  #botonenviar:hover {
-    /*opacity: 0.5;*/
-    cursor: pointer !important;
-    background: #4ab4ff;
-  }
-
-  h2 {
-    font-size: 50px;
-    text-align: center;
-  }
-
-  h4 {
-    font-size: 20px;
-    text-align: justify;
-  }
-
-
-  #Limpiar {
-    background-color: #ffffff;
-    color: black;
-    width: 250px;
-    font-size: 20px;
-    border-radius: 0.3rem;
-    padding: 10px 20px;
-    margin: 10px 4px 10px;
-    outline: 0;
-  }
-
-  #Limpiar:hover {
-    /*opacity: 0.5;*/
-    cursor: pointer !important;
-    background: #4ab4ff;
-  }
-</style>
-
+</section>
 {% endblock %}

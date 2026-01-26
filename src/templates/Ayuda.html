@@ -1,11 +1,21 @@
 {% extends "Index.html" %}
 
 {% block content %}
-<!-- <h1 style="text-align: center;">Seccion de ayuda</h1> -->
-<div class="alert alert-warning" role="alert"
-    style="text-align: center; font-weight: bold; color: black; font-size: 2rem;">
-    Resultado del Diagnostico
-</div>
+<section class="space-y-8">
+    <div class="section-card bg-gradient-to-br from-white to-amber-50">
+        <div class="section-header">
+            <div class="space-y-2">
+                <span class="pill">Resultado</span>
+                <h2>Orientación basada en la evaluación</h2>
+                <p class="text-slate-600">Estos resultados son informativos. Si tus síntomas son intensos, busca ayuda profesional.</p>
+            </div>
+            <a class="btn-secondary" href="/Test">Repetir test</a>
+        </div>
+    </div>
+
+    <div class="alert alert-warning" role="alert">
+        <strong>Importante:</strong> Esta orientación no sustituye el diagnóstico clínico ni el tratamiento médico.
+    </div>
 
 
 <!--<h3>{{Resultado_Final}}</h3>-->
@@ -14,20 +24,23 @@
 
 <!--<h2>{{Resultado_Final}}</h2>-->
 
-<div style=" display: flex; align-items: center; justify-content: center;">
+<div class="flex justify-center">
 
-    <div class="card border-success mb-5" style="max-width: 80rem;">
+    <div class="card w-full max-w-5xl mb-10">
 
-        <div class="card-header text-center card-body text-danger">
-            <h2 class="card-title"> {{Resultado_Final}} </h2>
+        <div class="card-header">
+            <div class="flex flex-col items-center gap-2 text-center">
+                <span class="pill">Resultado</span>
+                <h2 class="card-title text-rose-600">{{Resultado_Final}}</h2>
+                <p class="text-sm text-slate-600">Sigue estas recomendaciones generales para apoyar tu bienestar.</p>
+            </div>
         </div>
 
-        <div class="card-body text-success text-center">
-            <p class="card-text">
-            <h3>Consejos</h3> <br>
+        <div class="card-body text-center">
+            <h3 class="text-emerald-700">Consejos</h3>
 
             <ul class="list-group">
-                <li class="list-group-item list-group-item-success" style="text-align: justify;  color:black;">1. Habla
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">1. Habla
                     y desahógate.
                     Elige a un amigo/a o familiar de confianza como confidente, y cuéntale cómo te sientes.
                     Pero ten en cuenta que ellos sufren por ti, por lo que es importante que busques a un
@@ -112,7 +125,6 @@
                     que tomes todas las dosis con exactitud y que no interrumpas el tratamiento por tu cuenta.
                 </li>
             </ul>
-            </p>
         </div>
     </div>
 </div>
@@ -120,20 +132,23 @@
 {% else %}
 
 <!--En caso de que el resultado sea ansiedad-->
-<div style=" display: flex; align-items: center; justify-content: center;">
+<div class="flex justify-center">
 
-    <div class="card border-success mb-5" style="max-width: 80rem;">
+    <div class="card w-full max-w-5xl mb-10">
 
-        <div class="card-header text-center card-body text-danger">
-            <h2 class="card-title"> {{Resultado_Final}} </h2>
+        <div class="card-header">
+            <div class="flex flex-col items-center gap-2 text-center">
+                <span class="pill">Resultado</span>
+                <h2 class="card-title text-rose-600">{{Resultado_Final}}</h2>
+                <p class="text-sm text-slate-600">Sigue estas recomendaciones generales para apoyar tu bienestar.</p>
+            </div>
         </div>
 
-        <div class="card-body text-success text-center">
-            <p class="card-text">
-            <h3>Consejos</h3> <br>
+        <div class="card-body text-center">
+            <h3 class="text-emerald-700">Consejos</h3>
 
             <ul class="list-group">
-                <li class="list-group-item list-group-item-success" style="text-align: justify;  color:black;">1.
+                <li class="list-group-item list-group-item-success" style="text-align: justify;">1.
                     Ejercicio
                     El ejercicio es una de las cosas más importantes que puedes hacer para combatir el estrés.
                     Puede parecer contradictorio, pero poner el cuerpo en estrés físico mediante el ejercicio puede
@@ -264,7 +279,6 @@
                     sonidos en la música para relajación y meditación.
                 </li>
             </ul>
-            </p>
         </div>
     </div>
 </div>
@@ -272,4 +286,18 @@
 
 {% endif %}
 
+<div class="section-card">
+    <div class="section-header">
+        <div>
+            <h3 class="section-title">¿Necesitas más apoyo?</h3>
+            <p class="section-subtitle">Podemos ayudarte a tomar el siguiente paso.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            <a class="btn-primary" href="/Test">Volver al test</a>
+            <a class="btn-secondary" href="/">Ir al inicio</a>
+        </div>
+    </div>
+</div>
+
+</section>
 {% endblock %}
