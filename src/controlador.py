@@ -86,12 +86,7 @@ def test():
         ListaPC2.append(clase_Ansiedad(humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales,
                 genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos))
 
-        print("\n\nEl valor de P(C1) es: {}".format(ListaPC1),
-              "\n\nEl valor del P(C2) es: {}".format(ListaPC2))
-
         Sumatoria = ListaPC1[0] + ListaPC2[0]
-
-        print("\nLa sumatoria de P(C1) + P(C2) es: {}".format(Sumatoria))
 
         # Calculo de la Probabilidad
 
@@ -102,14 +97,9 @@ def test():
         Pro_PC1 = ""
         Pro_PC2 = ""
 
-        print("\nEl calculo para la probabilidad de P(C1) es de: {}".format(Probabilidad_PC1),
-              "\nEl calculo para la probabilidad de P(C2) es de: {}".format(Probabilidad_PC2))
-
         if Probabilidad_PC1 > Probabilidad_PC2:
-            print("\nLa probabilidad de P(C1) es de: {:.2f}".format(Probabilidad_PC1 * 100), "%", " por lo tanto padece de Depresion.")
             Resultado_Final = "Depresion"
         else:
-            print("\nLa probabilidad de P(C2) es de: {:.2f}".format(Probabilidad_PC2 * 100), "%", " por lo tanto padece de Ansiedad.")
             Resultado_Final = "Ansiedad"
 
         # Se realiza la conexion.

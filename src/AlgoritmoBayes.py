@@ -1,32 +1,43 @@
+import os
 import pandas as pd
 import numpy as np
 import pymysql
 from sqlalchemy import create_engine
+try:
+    from dotenv import load_dotenv
+except Exception:
+    try:
+        from dotenv.main import load_dotenv
+    except Exception as exc:
+        raise RuntimeError(
+            "No se encontró load_dotenv. Instala 'python-dotenv' y desinstala el paquete 'dotenv' si existe."
+        ) from exc
 
-string_connection = 'mysql+pymysql://root@localhost:3306/escalahamilton'
-connection = create_engine(string_connection)
+load_dotenv()
+
+db_user = os.getenv('DB_USER', 'root')
+db_password = os.getenv('DB_PASSWORD', '')
+db_host = os.getenv('DB_HOST', 'localhost')
+db_port = os.getenv('DB_PORT', '3306')
+db_name = os.getenv('DB_NAME', 'escalahamilton')
+
+string_connection = f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+connection = create_engine(
+    string_connection,
+    pool_pre_ping=True,
+    pool_recycle=1800
+)
 sql = 'SELECT * FROM conocimiento'
-datos = pd.read_sql_query(sql,connection)
-df = pd.DataFrame(datos)   
-#print(df)
+datos = pd.read_sql_query(sql, connection)
+df = pd.DataFrame(datos)
 
 Total_Datos = len(datos)
-print("Total de registros = {}".format(len(datos)))
-print("\nTotal de Depresion y Ansiedad: \n", df.groupby(["Clase"])["Clase"].count())
 
 pc1 = len(df[df['Clase'].str.contains('Depresion')])
 pc2 = len(df[df['Clase'].str.contains('Ansiedad')])
-print("\nTotal de P(C1)= {}".format(pc1), "/ {}".format(Total_Datos),"\nTotal de P(C2)= {}".format(pc2),"/ {}".format(Total_Datos), "\n")
 
 Total_Depresion=len(df[df['Clase'].str.contains('Depresion')])
 Total_Ansiedad=len(df[df['Clase'].str.contains('Ansiedad')])
-print("Total de depresion: {}".format(Total_Depresion), "\nTotal de ansiedad: {}".format(Total_Ansiedad))
- 
-print("\n\n")
-print("**************************************************************")
-print("*                         Depresion                          *")
-print("**************************************************************")
-print("\n\n")
 
 #Conteo de datos Si
 humor1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Humor']=='0')])
@@ -44,15 +55,6 @@ humor8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Humor']==
 humor9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Humor']=='4')])
 humor10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Humor']=='4')])
 
-print("\n---------------------------\nAtributo Humor\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(humor1),"/ {}".format(Total_Depresion)," | {}".format(humor2),"/{}".format(Total_Ansiedad),"|",
-"\n---------------------------\n1 | {}".format(humor3),"/ {}".format(Total_Depresion)," | {}".format(humor4),"/{}".format(Total_Ansiedad),"|",
-"\n---------------------------")
-print("2 | {}".format(humor5),"/ {}".format(Total_Depresion)," | {}".format(humor6),"/{}".format(Total_Ansiedad),"|",
-"\n---------------------------\n3 | {}".format(humor7),"/ {}".format(Total_Depresion)," | {}".format(humor8),"/{}".format(Total_Ansiedad),"|",
-"\n---------------------------")
-print("4 | {}".format(humor9),"/ {}".format(Total_Depresion)," | {}".format(humor10),"/{}".format(Total_Ansiedad),"|")
-
 culpa1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Culpa']=='0')])
 culpa2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Culpa']=='0')])
 
@@ -67,11 +69,6 @@ culpa8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Culpa']==
 
 culpa9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Culpa']=='4')])
 culpa10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Culpa']=='4')])
-
-print("\n---------------------------\nAtributo Culpa\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(culpa1),"/ {}".format(Total_Depresion)," | {}".format(culpa2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(culpa3),"/ {}".format(Total_Depresion)," | {}".format(culpa4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(culpa5),"/ {}".format(Total_Depresion)," | {}".format(culpa6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(culpa7),"/ {}".format(Total_Depresion)," | {}".format(culpa8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(culpa9),"/ {}".format(Total_Depresion)," | {}".format(culpa10),"/{}".format(Total_Ansiedad),"|")
 
 suicidio1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Suicidio']=='0')])
 suicidio2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Suicidio']=='0')])
@@ -88,11 +85,6 @@ suicidio8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Suicid
 suicidio9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Suicidio']=='4')])
 suicidio10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Suicidio']=='4')])
 
-print("\n---------------------------\nAtributo Suicidio\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(suicidio1),"/ {}".format(Total_Depresion)," | {}".format(suicidio2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(suicidio3),"/ {}".format(Total_Depresion)," | {}".format(suicidio4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(suicidio5),"/ {}".format(Total_Depresion)," | {}".format(suicidio6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(suicidio7),"/ {}".format(Total_Depresion)," | {}".format(suicidio8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(suicidio9),"/ {}".format(Total_Depresion)," | {}".format(suicidio10),"/{}".format(Total_Ansiedad),"|")
-
 insomnioprecoz1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['IPrecoz']=='0')])
 insomnioprecoz2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['IPrecoz']=='0')])
 
@@ -107,11 +99,6 @@ insomnioprecoz8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['
 
 insomnioprecoz9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['IPrecoz']=='4')])
 insomnioprecoz10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['IPrecoz']=='4')])
-
-print("\n---------------------------\nAtributo Insomnio Precoz\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(insomnioprecoz1),"/ {}".format(Total_Depresion)," | {}".format(insomnioprecoz2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(insomnioprecoz3),"/ {}".format(Total_Depresion)," | {}".format(insomnioprecoz4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(insomnioprecoz5),"/ {}".format(Total_Depresion)," | {}".format(insomnioprecoz6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(insomnioprecoz7),"/ {}".format(Total_Depresion)," | {}".format(insomnioprecoz8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(insomnioprecoz9),"/ {}".format(Total_Depresion)," | {}".format(insomnioprecoz10),"/{}".format(Total_Ansiedad),"|")
 
 insomniointermedio1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['IIntermedio']=='0')])
 insomniointermedio2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['IIntermedio']=='0')])
@@ -128,11 +115,6 @@ insomniointermedio8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(dat
 insomniointermedio9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['IIntermedio']=='4')])
 insomniointermedio10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['IIntermedio']=='4')])
 
-print("\n---------------------------\nAtributo Insomnio Intermedio\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(insomniointermedio1),"/ {}".format(Total_Depresion)," | {}".format(insomniointermedio2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(insomniointermedio3),"/ {}".format(Total_Depresion)," | {}".format(insomniointermedio4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(insomniointermedio5),"/ {}".format(Total_Depresion)," | {}".format(insomniointermedio6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(insomniointermedio7),"/ {}".format(Total_Depresion)," | {}".format(insomniointermedio8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(insomniointermedio9),"/ {}".format(Total_Depresion)," | {}".format(insomniointermedio10),"/{}".format(Total_Ansiedad),"|")
-
 insomniotardio1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['ITardio']=='0')])
 insomniotardio2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['ITardio']=='0')])
 
@@ -147,11 +129,6 @@ insomniotardio8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['
 
 insomniotardio9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['ITardio']=='4')])
 insomniotardio10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['ITardio']=='4')])
-
-print("\n---------------------------\nAtributo Insomnio Tardio\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(insomniotardio1),"/ {}".format(Total_Depresion)," | {}".format(insomniotardio2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(insomniotardio3),"/ {}".format(Total_Depresion)," | {}".format(insomniotardio4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(insomniotardio5),"/ {}".format(Total_Depresion)," | {}".format(insomniotardio6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(insomniotardio7),"/ {}".format(Total_Depresion)," | {}".format(insomniotardio8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(insomniotardio9),"/ {}".format(Total_Depresion)," | {}".format(insomniotardio10),"/{}".format(Total_Ansiedad),"|")
 
 trabajo1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Trabajo']=='0')])
 trabajo2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Trabajo']=='0')])
@@ -168,11 +145,6 @@ trabajo8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Trabajo
 trabajo9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Trabajo']=='4')])
 trabajo10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Trabajo']=='4')])
 
-print("\n---------------------------\nAtributo Trabajo\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(trabajo1),"/ {}".format(Total_Depresion)," | {}".format(trabajo2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(trabajo3),"/ {}".format(Total_Depresion)," | {}".format(trabajo4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(trabajo5),"/ {}".format(Total_Depresion)," | {}".format(trabajo6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(trabajo7),"/ {}".format(Total_Depresion)," | {}".format(trabajo8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(trabajo9),"/ {}".format(Total_Depresion)," | {}".format(trabajo10),"/{}".format(Total_Ansiedad),"|")
-
 inhibicion1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Inhibicion']=='0')])
 inhibicion2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Inhibicion']=='0')])
 
@@ -188,11 +160,6 @@ inhibicion8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Inhi
 inhibicion9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Inhibicion']=='4')])
 inhibicion10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Inhibicion']=='4')])
 
-print("\n---------------------------\nAtributo Inhibición\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(inhibicion1),"/ {}".format(Total_Depresion)," | {}".format(inhibicion2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(inhibicion3),"/ {}".format(Total_Depresion)," | {}".format(inhibicion4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(inhibicion5),"/ {}".format(Total_Depresion)," | {}".format(inhibicion6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(inhibicion7),"/ {}".format(Total_Depresion)," | {}".format(inhibicion8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(inhibicion9),"/ {}".format(Total_Depresion)," | {}".format(inhibicion10),"/{}".format(Total_Ansiedad),"|")
-
 agitacion1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Agitacion']=='0')])
 agitacion2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Agitacion']=='0')])
 
@@ -207,11 +174,6 @@ agitacion8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Agita
 
 agitacion9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Agitacion']=='4')])
 agitacion10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Agitacion']=='4')])
-
-print("\n---------------------------\nAtributo Agitación\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(agitacion1),"/ {}".format(Total_Depresion)," | {}".format(agitacion2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(agitacion3),"/ {}".format(Total_Depresion)," | {}".format(agitacion4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(agitacion5),"/ {}".format(Total_Depresion)," | {}".format(agitacion6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(agitacion7),"/ {}".format(Total_Depresion)," | {}".format(agitacion8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(agitacion9),"/ {}".format(Total_Depresion)," | {}".format(agitacion10),"/{}".format(Total_Ansiedad),"|")
         
 psiquica1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['APsiquica']=='0')])
 psiquica2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['APsiquica']=='0')])
@@ -227,11 +189,6 @@ psiquica8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['APsiqu
 
 psiquica9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['APsiquica']=='4')])
 psiquica10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['APsiquica']=='4')])
-
-print("\n---------------------------\nAtributo Psiquica\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(psiquica1),"/ {}".format(Total_Depresion)," | {}".format(psiquica2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(psiquica3),"/ {}".format(Total_Depresion)," | {}".format(psiquica4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(psiquica5),"/ {}".format(Total_Depresion)," | {}".format(psiquica6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(psiquica7),"/ {}".format(Total_Depresion)," | {}".format(psiquica8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(psiquica9),"/ {}".format(Total_Depresion)," | {}".format(psiquica10),"/{}".format(Total_Ansiedad),"|")
         
 somatica1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['ASomatica']=='0')])
 somatica2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['ASomatica']=='0')])
@@ -248,11 +205,6 @@ somatica8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['ASomat
 somatica9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['ASomatica']=='4')])
 somatica10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['ASomatica']=='4')])
 
-print("\n---------------------------\nAtributo Somatica\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(somatica1),"/ {}".format(Total_Depresion)," | {}".format(somatica2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(somatica3),"/ {}".format(Total_Depresion)," | {}".format(somatica4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(somatica5),"/ {}".format(Total_Depresion)," | {}".format(somatica6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(somatica7),"/ {}".format(Total_Depresion)," | {}".format(somatica8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(somatica9),"/ {}".format(Total_Depresion)," | {}".format(somatica10),"/{}".format(Total_Ansiedad),"|")
-
 sgastrointestinales1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGastrointestinales']=='0')])
 sgastrointestinales2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGastrointestinales']=='0')])
 
@@ -267,11 +219,6 @@ sgastrointestinales8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(da
 
 sgastrointestinales9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGastrointestinales']=='4')])
 sgastrointestinales10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGastrointestinales']=='4')])
-
-print("\n---------------------------\nAtributo Gastrointestinales\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(sgastrointestinales1),"/ {}".format(Total_Depresion)," | {}".format(sgastrointestinales2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(sgastrointestinales3),"/ {}".format(Total_Depresion)," | {}".format(sgastrointestinales4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(sgastrointestinales5),"/ {}".format(Total_Depresion)," | {}".format(sgastrointestinales6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(sgastrointestinales7),"/ {}".format(Total_Depresion)," | {}".format(sgastrointestinales8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(sgastrointestinales9),"/ {}".format(Total_Depresion)," | {}".format(sgastrointestinales10),"/{}".format(Total_Ansiedad),"|")
  
 sgenerales1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGenerales']=='0')])
 sgenerales2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGenerales']=='0')])
@@ -288,11 +235,6 @@ sgenerales8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGen
 sgenerales9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGenerales']=='4')])
 sgenerales10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGenerales']=='4')])
 
-print("\n---------------------------\nAtributo Generales\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(sgenerales1),"/ {}".format(Total_Depresion)," | {}".format(sgenerales2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(sgenerales3),"/ {}".format(Total_Depresion)," | {}".format(sgenerales4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(sgenerales5),"/ {}".format(Total_Depresion)," | {}".format(sgenerales6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(sgenerales7),"/ {}".format(Total_Depresion)," | {}".format(sgenerales8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(sgenerales9),"/ {}".format(Total_Depresion)," | {}".format(sgenerales10),"/{}".format(Total_Ansiedad),"|")
-
 sgenitales1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGenitales']=='0')])
 sgenitales2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGenitales']=='0')])
 
@@ -307,11 +249,6 @@ sgenitales8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGen
 
 sgenitales9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SGenitales']=='4')])
 sgenitales10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SGenitales']=='4')])
-
-print("\n---------------------------\nAtributo Genitales\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(sgenitales1),"/ {}".format(Total_Depresion)," | {}".format(sgenitales2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(sgenitales3),"/ {}".format(Total_Depresion)," | {}".format(sgenitales4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(sgenitales5),"/ {}".format(Total_Depresion)," | {}".format(sgenitales6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(sgenitales7),"/ {}".format(Total_Depresion)," | {}".format(sgenitales8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(sgenitales9),"/ {}".format(Total_Depresion)," | {}".format(sgenitales10),"/{}".format(Total_Ansiedad),"|")
 
 hipocondria1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Hipocondria']=='0')])
 hipocondria2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Hipocondria']=='0')])
@@ -328,11 +265,6 @@ hipocondria8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Hip
 hipocondria9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Hipocondria']=='4')])
 hipocondria10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Hipocondria']=='4')])
 
-print("\n---------------------------\nAtributo Hipocondria\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(hipocondria1),"/ {}".format(Total_Depresion)," | {}".format(hipocondria2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(hipocondria3),"/ {}".format(Total_Depresion)," | {}".format(hipocondria4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(hipocondria5),"/ {}".format(Total_Depresion)," | {}".format(hipocondria6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(hipocondria7),"/ {}".format(Total_Depresion)," | {}".format(hipocondria8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(hipocondria9),"/ {}".format(Total_Depresion)," | {}".format(hipocondria10),"/{}".format(Total_Ansiedad),"|")
-
 peso1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Peso']=='0')])
 peso2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Peso']=='0')])
 
@@ -347,11 +279,6 @@ peso8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Peso']=='3
 
 peso9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Peso']=='4')])
 peso10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Peso']=='4')])
-
-print("\n---------------------------\nAtributo Peso\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(peso1),"/ {}".format(Total_Depresion)," | {}".format(peso2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(peso3),"/ {}".format(Total_Depresion)," | {}".format(peso4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(peso5),"/ {}".format(Total_Depresion)," | {}".format(peso6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(peso7),"/ {}".format(Total_Depresion)," | {}".format(peso8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(peso9),"/ {}".format(Total_Depresion)," | {}".format(peso10),"/{}".format(Total_Ansiedad),"|")
 
 introspeccion1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Introspeccion']=='0')])
 introspeccion2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Introspeccion']=='0')])
@@ -368,18 +295,6 @@ introspeccion8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['I
 introspeccion9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Introspeccion']=='4')])
 introspeccion10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Introspeccion']=='4')])
 
-print("\n---------------------------\nAtributo Introspeccion\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(introspeccion1),"/ {}".format(Total_Depresion)," | {}".format(introspeccion2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(introspeccion3),"/ {}".format(Total_Depresion)," | {}".format(introspeccion4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(introspeccion5),"/ {}".format(Total_Depresion)," | {}".format(introspeccion6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(introspeccion7),"/ {}".format(Total_Depresion)," | {}".format(introspeccion8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(introspeccion9),"/ {}".format(Total_Depresion)," | {}".format(introspeccion10),"/{}".format(Total_Ansiedad),"|")
-
-        
-print("\n\n")
-print("**************************************************************")
-print("*                         Ansiedad                           *")
-print("**************************************************************")
-print("\n\n")
-
 animoansioso1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['AnimoAnsioso']=='0')])
 animoansioso2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['AnimoAnsioso']=='0')])
 
@@ -394,11 +309,6 @@ animoansioso8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['An
 
 animoansioso9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['AnimoAnsioso']=='4')])
 animoansioso10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['AnimoAnsioso']=='4')])
-
-print("\n---------------------------\nAtributo Estado de Animo Ansioso\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(animoansioso1),"/ {}".format(Total_Depresion)," | {}".format(animoansioso2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(animoansioso3),"/ {}".format(Total_Depresion)," | {}".format(animoansioso4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(animoansioso5),"/ {}".format(Total_Depresion)," | {}".format(animoansioso6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(animoansioso7),"/ {}".format(Total_Depresion)," | {}".format(animoansioso8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(animoansioso9),"/ {}".format(Total_Depresion)," | {}".format(animoansioso10),"/{}".format(Total_Ansiedad),"|")
 
 tension1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Tension']=='0')])
 tension2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Tension']=='0')])
@@ -415,11 +325,6 @@ tension8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Tension
 tension9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Tension']=='4')])
 tension10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Tension']=='4')])
 
-print("\n---------------------------\nAtributo Tension\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(tension1),"/ {}".format(Total_Depresion)," | {}".format(tension2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(tension3),"/ {}".format(Total_Depresion)," | {}".format(tension4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(tension5),"/ {}".format(Total_Depresion)," | {}".format(tension6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(tension7),"/ {}".format(Total_Depresion)," | {}".format(tension8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(tension9),"/ {}".format(Total_Depresion)," | {}".format(tension10),"/{}".format(Total_Ansiedad),"|")
-
 temores1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Temores']=='0')])
 temores2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Temores']=='0')])
 
@@ -434,11 +339,6 @@ temores8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Temores
 
 temores9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Temores']=='4')])
 temores10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Temores']=='4')])
-
-print("\n---------------------------\nAtributo Temores\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(temores1),"/ {}".format(Total_Depresion)," | {}".format(temores2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(temores3),"/ {}".format(Total_Depresion)," | {}".format(temores4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(temores5),"/ {}".format(Total_Depresion)," | {}".format(temores6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(temores7),"/ {}".format(Total_Depresion)," | {}".format(temores8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(temores9),"/ {}".format(Total_Depresion)," | {}".format(temores10),"/{}".format(Total_Ansiedad),"|")
 
 insomnio1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Insomnio']=='0')])
 insomnio2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Insomnio']=='0')])
@@ -455,11 +355,6 @@ insomnio8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Insomn
 insomnio9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Insomnio']=='4')])
 insomnio10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Insomnio']=='4')])
 
-print("\n---------------------------\nAtributo Insomnio\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(insomnio1),"/ {}".format(Total_Depresion)," | {}".format(insomnio2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(insomnio3),"/ {}".format(Total_Depresion)," | {}".format(insomnio4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(insomnio5),"/ {}".format(Total_Depresion)," | {}".format(insomnio6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(insomnio7),"/ {}".format(Total_Depresion)," | {}".format(insomnio8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(insomnio9),"/ {}".format(Total_Depresion)," | {}".format(insomnio10),"/{}".format(Total_Ansiedad),"|")
-
 intelectual1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Intelectual']=='0')])
 intelectual2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Intelectual']=='0')])
 
@@ -474,11 +369,6 @@ intelectual8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Int
 
 intelectual9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Intelectual']=='4')])
 intelectual10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Intelectual']=='4')])
-
-print("\n---------------------------\nAtributo Intelectual\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(intelectual1),"/ {}".format(Total_Depresion)," | {}".format(intelectual2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(intelectual3),"/ {}".format(Total_Depresion)," | {}".format(intelectual4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(intelectual5),"/ {}".format(Total_Depresion)," | {}".format(intelectual6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(intelectual7),"/ {}".format(Total_Depresion)," | {}".format(intelectual8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(intelectual9),"/ {}".format(Total_Depresion)," | {}".format(intelectual10),"/{}".format(Total_Ansiedad),"|")
 
 animodeprimido1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['AnimoDeprimido']=='0')])
 animodeprimido2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['AnimoDeprimido']=='0')])
@@ -495,11 +385,6 @@ animodeprimido8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['
 animodeprimido9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['AnimoDeprimido']=='4')])
 animodeprimido10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['AnimoDeprimido']=='4')])
 
-print("\n---------------------------\nAtributo Animo Deprimido\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(animodeprimido1),"/ {}".format(Total_Depresion)," | {}".format(animodeprimido2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(animodeprimido3),"/ {}".format(Total_Depresion)," | {}".format(animodeprimido4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(animodeprimido5),"/ {}".format(Total_Depresion)," | {}".format(animodeprimido6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(animodeprimido7),"/ {}".format(Total_Depresion)," | {}".format(animodeprimido8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(animodeprimido9),"/ {}".format(Total_Depresion)," | {}".format(animodeprimido10),"/{}".format(Total_Ansiedad),"|")
-
 somaticosmusculares1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SomaticosMusculares']=='0')])
 somaticosmusculares2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SomaticosMusculares']=='0')])
 
@@ -514,11 +399,6 @@ somaticosmusculares8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(da
 
 somaticosmusculares9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SomaticosMusculares']=='4')])
 somaticosmusculares10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SomaticosMusculares']=='4')])
-
-print("\n---------------------------\nAtributo Somaticos Musculares\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(somaticosmusculares1),"/ {}".format(Total_Depresion)," | {}".format(somaticosmusculares2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(somaticosmusculares3),"/ {}".format(Total_Depresion)," | {}".format(somaticosmusculares4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(somaticosmusculares5),"/ {}".format(Total_Depresion)," | {}".format(somaticosmusculares6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(somaticosmusculares7),"/ {}".format(Total_Depresion)," | {}".format(somaticosmusculares8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(somaticosmusculares9),"/ {}".format(Total_Depresion)," | {}".format(somaticosmusculares10),"/{}".format(Total_Ansiedad),"|")
 
 somaticossensoriales1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SomaticosSensoriales']=='0')])
 somaticossensoriales2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SomaticosSensoriales']=='0')])
@@ -535,11 +415,6 @@ somaticossensoriales8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(d
 somaticossensoriales9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['SomaticosSensoriales']=='4')])
 somaticossensoriales10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['SomaticosSensoriales']=='4')])
 
-print("\n---------------------------\nAtributo Somaticos Sensoriales\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(somaticossensoriales1),"/ {}".format(Total_Depresion)," | {}".format(somaticossensoriales2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(somaticossensoriales3),"/ {}".format(Total_Depresion)," | {}".format(somaticossensoriales4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(somaticossensoriales5),"/ {}".format(Total_Depresion)," | {}".format(somaticossensoriales6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(somaticossensoriales7),"/ {}".format(Total_Depresion)," | {}".format(somaticossensoriales8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(somaticossensoriales9),"/ {}".format(Total_Depresion)," | {}".format(somaticossensoriales10),"/{}".format(Total_Ansiedad),"|")
-
 cardiovasculares1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Cardiovasculares']=='0')])
 cardiovasculares2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Cardiovasculares']=='0')])
 
@@ -554,11 +429,6 @@ cardiovasculares8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos
 
 cardiovasculares9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Cardiovasculares']=='4')])
 cardiovasculares10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Cardiovasculares']=='4')])
-
-print("\n---------------------------\nAtributo Cardiovasculares\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(cardiovasculares1),"/ {}".format(Total_Depresion)," | {}".format(cardiovasculares2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(cardiovasculares3),"/ {}".format(Total_Depresion)," | {}".format(cardiovasculares4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(cardiovasculares5),"/ {}".format(Total_Depresion)," | {}".format(cardiovasculares6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(cardiovasculares7),"/ {}".format(Total_Depresion)," | {}".format(cardiovasculares8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(cardiovasculares9),"/ {}".format(Total_Depresion)," | {}".format(cardiovasculares10),"/{}".format(Total_Ansiedad),"|")
 
 respiratorios1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Respiratorios']=='0')])
 respiratorios2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Respiratorios']=='0')])
@@ -575,11 +445,6 @@ respiratorios8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['R
 respiratorios9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Respiratorios']=='4')])
 respiratorios10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Respiratorios']=='4')])
 
-print("\n---------------------------\nAtributo Respiratorios\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(respiratorios1),"/ {}".format(Total_Depresion)," | {}".format(respiratorios2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(respiratorios3),"/ {}".format(Total_Depresion)," | {}".format(respiratorios4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(respiratorios5),"/ {}".format(Total_Depresion)," | {}".format(respiratorios6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(respiratorios7),"/ {}".format(Total_Depresion)," | {}".format(respiratorios8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(respiratorios9),"/ {}".format(Total_Depresion)," | {}".format(respiratorios10),"/{}".format(Total_Ansiedad),"|")
-
 gastrointestinales1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Gastrointestinales']=='0')])
 gastrointestinales2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Gastrointestinales']=='0')])
 
@@ -594,11 +459,6 @@ gastrointestinales8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(dat
 
 gastrointestinales9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Gastrointestinales']=='4')])
 gastrointestinales10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Gastrointestinales']=='4')])
-
-print("\n---------------------------\nAtributo Gastrointestinales\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(gastrointestinales1),"/ {}".format(Total_Depresion)," | {}".format(gastrointestinales2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(gastrointestinales3),"/ {}".format(Total_Depresion)," | {}".format(gastrointestinales4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(gastrointestinales5),"/ {}".format(Total_Depresion)," | {}".format(gastrointestinales6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(gastrointestinales7),"/ {}".format(Total_Depresion)," | {}".format(gastrointestinales8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(gastrointestinales9),"/ {}".format(Total_Depresion)," | {}".format(gastrointestinales10),"/{}".format(Total_Ansiedad),"|")
 
 genitourionarios1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Genitourinarios']=='0')])
 genitourionarios2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Genitourinarios']=='0')])
@@ -615,12 +475,6 @@ genitourionarios8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos
 genitourionarios9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Genitourinarios']=='4')])
 genitourionarios10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Genitourinarios']=='4')])
 
-
-print("\n---------------------------\nAtributo Genitourinarios\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(genitourionarios1),"/ {}".format(Total_Depresion)," | {}".format(genitourionarios2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(genitourionarios3),"/ {}".format(Total_Depresion)," | {}".format(genitourionarios4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(genitourionarios5),"/ {}".format(Total_Depresion)," | {}".format(genitourionarios6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(genitourionarios7),"/ {}".format(Total_Depresion)," | {}".format(genitourionarios8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(genitourionarios9),"/ {}".format(Total_Depresion)," | {}".format(genitourionarios10),"/{}".format(Total_Ansiedad),"|")
-
 autonomos1 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Autonomos']=='0')])
 autonomos2 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Autonomos']=='0')])
 
@@ -635,11 +489,6 @@ autonomos8 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Auton
 
 autonomos9 = len(datos.loc[datos['Clase'].str.contains('Depresion')&(datos['Autonomos']=='4')])
 autonomos10 = len(datos.loc[datos['Clase'].str.contains('Ansiedad')&(datos['Autonomos']=='4')])
-
-print("\n---------------------------\nAtributo Autonomos\n---------------------------", "\n    Depresion | Ansiedad")
-print("0 | {}".format(autonomos1),"/ {}".format(Total_Depresion)," | {}".format(autonomos2),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n1 | {}".format(autonomos3),"/ {}".format(Total_Depresion)," | {}".format(autonomos4),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("2 | {}".format(autonomos5),"/ {}".format(Total_Depresion)," | {}".format(autonomos6),"/{}".format(Total_Ansiedad),"|","\n---------------------------\n3 | {}".format(autonomos7),"/ {}".format(Total_Depresion)," | {}".format(autonomos8),"/{}".format(Total_Ansiedad),"|","\n---------------------------")
-print("4 | {}".format(autonomos9),"/ {}".format(Total_Depresion)," | {}".format(autonomos10),"/{}".format(Total_Ansiedad),"|")
 
 def clase_Depresion(Humor,Culpa,Suicidio,IPrecoz,IIntermedio,ITardio,Trabajo,Inhibicion,Agitacion,APsiquica,ASomatica,SGastrointestinales,SGenerales,SGenitales,Hipocondria,Peso,Introspeccion,AnimoAnsioso,Tension,Temores,Insomnio,Intelectual,AnimoDeprimido,SomaticosMusculares,SomaticosSensoriales,Cardiovasculares,Respiratorios,Gastrointestinales,Genitourinarios,Autonomos):
 # =============================================================================
@@ -1431,36 +1280,3 @@ def clase_Ansiedad(Humor,Culpa,Suicidio,IPrecoz,IIntermedio,ITardio,Trabajo,Inhi
         
     Calculo_PC2=((pc2/Total_Datos)*(humor* culpa* suicidio* iprecoz* iintermedio* itardio* trabajo* inhibicion* agitacion* apsiquica* asomatica* sgastrointestinales* sgenerales* sgenitales* hipocondria* peso* introspeccion* animoansioso* tension* temores* insomnio* intelectual* animodeprimido* somusculares* sosensoriales* cardiovasculares* respiratorios* agastrointestinales* genitourinarios* autonomos))
     return Calculo_PC2  
-
-
-"""
-ListaPC1 = []
-ListaPC2 = []
-
-clase_Depresion("No","No","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","No","No","No","No","No","No","No","No","No","No","No","No","No")
-
-ListaPC1.append(clase_Depresion("No","No","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","No","No","No","No","No","No","No","No","No","No","No","No","No"))
-
-clase_Ansiedad("No","No","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","No","No","No","No","No","No","No","No","No","No","No","No","No")
-
-ListaPC2.append(clase_Ansiedad("No","No","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","Si","No","No","No","No","No","No","No","No","No","No","No","No","No"))
-
-print("\n\nEl valor de P(C1) es: {}".format(ListaPC1), "\n\nEl valor del P(C2) es: {}".format(ListaPC2))
-
-Sumatoria = ListaPC1[0] + ListaPC2[0]
-
-print("\nLa sumatoria de P(C1) + P(C2) es: {}".format(Sumatoria))
-
-#Calculo de la Probabilidad
-
-Probabilidad_PC1 = ListaPC1[0]/Sumatoria
-
-Probabilidad_PC2 = ListaPC2[0]/Sumatoria
-
-print("\nEl calculo para la probabilidad de P(C1) es de: {}".format(Probabilidad_PC1), "\nEl calculo para la probabilidad de P(C2) es de: {}".format(Probabilidad_PC2))
-
-if Probabilidad_PC1 > Probabilidad_PC2:
-    print("\nLa probabilidad de P(C1) es de: {:.2f}".format(Probabilidad_PC1 * 100),"%", " por lo tanto padece de Depresion.")
-else:
-    print("\nLa probabilidad de P(C2) es de: {:.2f}".format(Probabilidad_PC2 * 100),"%", " por lo tanto padece de Ansiedad.")
-"""
