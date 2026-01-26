@@ -11,7 +11,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script>
-    tailwind = { config: { theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } } };
+    tailwind = {
+      config: {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+          }
+        }
+      }
+    };
   </script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
@@ -64,6 +72,11 @@
       .list-group-item { @apply px-5 py-4 text-slate-700; }
       .list-group-item-success { @apply bg-emerald-50; }
       .list-group-item-light { @apply bg-slate-50; }
+
+      .field-error { @apply ring-2 ring-rose-400/70 bg-rose-50; }
+      .field-error { @apply ring-2 ring-rose-400/70 bg-rose-50; }
+
+      .table-questions td:nth-child(2) { @apply text-justify; }
     }
   </style>
   <!-- <link rel="stylesheet" href="/static/css/index.css"> -->
