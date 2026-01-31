@@ -2,6 +2,32 @@
 
 {% block content %}
 
+<section class="space-y-8">
+
+<div class="section-card bg-gradient-to-br from-white to-sky-50">
+  <div class="section-header">
+    <div class="space-y-2">
+      <span class="pill">Test de Hamilton</span>
+      <h2>Evaluación de ansiedad y depresión</h2>
+      <p class="text-slate-600">Completa el cuestionario con honestidad. Los resultados son orientativos y no sustituyen atención profesional.</p>
+    </div>
+    <div class="grid gap-2 text-sm text-slate-600">
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+        Tiempo estimado: 6-8 minutos
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+        Escala: 0 (Nunca) a 4 (Frecuentemente)
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="h-2 w-2 rounded-full bg-amber-500"></span>
+        Responde una opción por pregunta
+      </div>
+    </div>
+  </div>
+</div>
+
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
     <path
@@ -22,19 +48,39 @@
     <use xlink:href="#info-fill" />
   </svg>
   <div>
-    A continuación se muestra un test que se basa en la escala de Hamilton para medir el nivel de 
-    ansiedad y depresión. Se trata de una escala con 30 apartados y en cada pregunta ha de elegir 
-    una sola respuesta. Cada respuesta puntúa de 0 a 4 puntos.
+    A continuación encontrarás una evaluación basada en la escala de Hamilton para medir el nivel de
+    ansiedad y depresión. Responde una sola opción por pregunta. Cada respuesta puntúa de 0 a 4.
   </div>
 </div>
+
+<div class="section-card">
+  <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div>
+      <h3 class="section-title">Progreso del test</h3>
+      <p class="section-subtitle">Completa todas las preguntas para continuar.</p>
+    </div>
+    <div class="text-sm font-semibold text-slate-600" id="progressText">0 de 32 respondidas</div>
+  </div>
+  <div class="mt-3 h-3 w-full overflow-hidden rounded-full bg-slate-100">
+    <div id="progressBar" class="h-full w-0 rounded-full bg-sky-500 transition-all"></div>
+  </div>
+  <div id="inlineError" class="mt-4 hidden alert alert-warning" role="alert"></div>
 </div>
 
-<table class="table table-striped">
+<div class="section-card">
+  <div class="section-header">
+    <div>
+      <h3 class="section-title">Guía de interpretación</h3>
+      <p class="section-subtitle">Consulta el rango de puntuación y su gravedad estimada.</p>
+    </div>
+  </div>
+  <div class="table-container">
+    <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Puntuación</th>
-      <th scope="col">Gravedad del cuadro de depresión y ansiedad</th>
+      <th scope="col">Gravedad estimada</th>
     </tr>
   </thead>
   <tbody>
@@ -51,7 +97,7 @@
     <tr>
       <th scope="row">3</th>
       <td>13-17</td>
-      <td>Menos que depresión y ansiedad mayor</td>
+      <td>Menor que depresión o ansiedad mayor</td>
     </tr>
     <tr>
       <th scope="row">4</th>
@@ -64,20 +110,27 @@
       <td>Más que depresión o ansiedad mayor</td>
     </tr>
   </tbody>
-</table>
-<br>
-<legend>
-  <h2>
-    <div class="alert alert-info" role="alert"> Diagnostico para la detección de ansiedad y depresión</div>
-  </h2>
-</legend>
+    </table>
+  </div>
+</div>
 
-<div id="quiz" class="float-sm-start">
-  <form id="formulario" action="/Test" method="POST">
-    <fieldset class="float-xl-start">
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+<div class="alert alert-info text-center text-xl font-semibold" role="alert">
+  Evaluación para la detección de ansiedad y depresión
+</div>
+
+<div id="quiz" class="space-y-6">
+  <form id="formulario" action="/Test" method="POST" class="space-y-6">
+    <fieldset class="space-y-8">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Datos generales</h3>
+            <p class="section-subtitle">Campos requeridos para interpretar la evaluación.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered table-questions">
         <thead>
-          <h4>Ingresa tus datos</h4>
           <tr>
             <th scope="col">#</th>
             <th colspan="8" class="text-center">Datos</th>
@@ -86,14 +139,14 @@
         <thead>
           <tr>
             <th scope="row">*</th>
-            <td>Selecciona tu genero</td>
+            <td>Selecciona tu género</td>
             <td colspan="2"><input type="radio" name="Genero" value="Masculino"> Masculino</td>
             <td colspan="4"> <input type="radio" name="Genero" value="Femenino"> Femenino</td>
           </tr>
 
           <tr>
             <th scope="row">*</th>
-            <td>Selecciona tu edad</td>
+            <td>Selecciona tu rango de edad</td>
 
             <td><input type="radio" name="Edad" value="18-24 años"> 18-24 años</td>
             <td><input type="radio" name="Edad" value="25-34 años"> 25-34 años</td>
@@ -102,13 +155,20 @@
             <td><input type="radio" name="Edad" value="Más de 54 años"> Más de 54 años</td>
           </tr>
           </tbody>
-      </table>
+          </table>
+        </div>
+      </div>
 
-      <br><br>
-
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Síntomas de depresión</h3>
+            <p class="section-subtitle">Indica la intensidad con la que lo has percibido.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered table-questions">
         <thead>
-          <h4>¿Padece algunos de estos sintomas de la depresión?</h4>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Pregunta</th>
@@ -310,21 +370,25 @@
 
 
         </tbody>
-      </table>
-      <br>
+          </table>
+        </div>
+      </div>
 
     </fieldset>
 
-    <br>
-
-    <hr><br>
-
     <!-- PARA LA ANSIEDAD -->
 
-    <fieldset class="float-sm-start">
-      <table class="table table-striped table-responsive{-sm|-md|-lg|-xl|-xxl} table-bordered">
+    <fieldset class="space-y-8">
+      <div class="section-card">
+        <div class="section-header">
+          <div>
+            <h3 class="section-title">Síntomas de ansiedad</h3>
+            <p class="section-subtitle">Indica la intensidad con la que lo has percibido.</p>
+          </div>
+        </div>
+        <div class="table-container">
+          <table class="table table-striped table-bordered">
         <thead>
-          <h4>¿Padece algunos de estos sintomas de la ansiedad?</h4>
           <tr>
             <th scope="col">#</th>
             <th scope="col">Pregunta</th>
@@ -490,17 +554,15 @@
           </tr>
 
         </tbody>
-      </table>
-      <br>
+          </table>
+        </div>
+      </div>
     </fieldset>
 
 
-    <br><br>
-
-    <div>
-      <button id="botonenviar" type="submit" onclick="">Generar Diagnostico</button>
-      <button id="Limpiar" type="reset">Limpiar Formulario</button>
-
+    <div class="flex flex-wrap gap-3 pt-2">
+      <button id="botonenviar" class="btn-primary" type="submit" onclick="">Generar Diagnóstico</button>
+      <button id="Limpiar" class="btn-secondary" type="reset">Limpiar formulario</button>
     </div>
   </form>
 </div>
@@ -510,438 +572,139 @@
 
 
 <script>
-  document.getElementById("quiz").addEventListener("submit", function (event) {
-    let hasError = false;
-    // obtenemos todos los input radio del grupo horario que esten chequeados
-    // si no hay ninguno lanzamos alerta
-    //Alertas de aviso para la Depresion
-    if (!document.querySelector('input[name="Genero"]:checked')) {
-      //alert('Error, rellena el campo Genero');
-      //Swal.fire('Error, rellena el campo Genero')
+  (function () {
+    const form = document.getElementById("formulario");
+    const submitBtn = document.getElementById("botonenviar");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const inlineError = document.getElementById("inlineError");
+    let isSubmitting = false;
+
+    const requiredGroups = [
+      { name: "Genero", label: "Género" },
+      { name: "Edad", label: "Rango de edad" },
+
+      { name: "Humordepresivo", label: "Depresión (pregunta 1)" },
+      { name: "Sentimientoculpa", label: "Depresión (pregunta 2)" },
+      { name: "Suicidio", label: "Depresión (pregunta 3)" },
+      { name: "Insomnioprecoz", label: "Depresión (pregunta 4)" },
+      { name: "Insomniointermedio", label: "Depresión (pregunta 5)" },
+      { name: "Insomniotardio", label: "Depresión (pregunta 6)" },
+      { name: "Trabajoactividades", label: "Depresión (pregunta 7)" },
+      { name: "Inhibicionpsicomotora", label: "Depresión (pregunta 8)" },
+      { name: "Agitacionpsicomotora", label: "Depresión (pregunta 9)" },
+      { name: "Ansiedadpsiquica", label: "Depresión (pregunta 10)" },
+      { name: "Ansiedadsomatica", label: "Depresión (pregunta 11)" },
+      { name: "Somaticosgastrointestinales", label: "Depresión (pregunta 12)" },
+      { name: "Somaticosgenerales", label: "Depresión (pregunta 13)" },
+      { name: "Genitales", label: "Depresión (pregunta 14)" },
+      { name: "Hipocondria", label: "Depresión (pregunta 15)" },
+      { name: "Peso", label: "Depresión (pregunta 16)" },
+      { name: "Introspeccion", label: "Depresión (pregunta 17)" },
+
+      { name: "Estadoansioso", label: "Ansiedad (pregunta 1)" },
+      { name: "Tension", label: "Ansiedad (pregunta 2)" },
+      { name: "Temores", label: "Ansiedad (pregunta 3)" },
+      { name: "Insomnio", label: "Ansiedad (pregunta 4)" },
+      { name: "Intelectual", label: "Ansiedad (pregunta 5)" },
+      { name: "Estadodeprimido", label: "Ansiedad (pregunta 6)" },
+      { name: "Musculares", label: "Ansiedad (pregunta 7)" },
+      { name: "Sensoriales", label: "Ansiedad (pregunta 8)" },
+      { name: "Cardiovasculares", label: "Ansiedad (pregunta 9)" },
+      { name: "Respiratorios", label: "Ansiedad (pregunta 10)" },
+      { name: "Gastrointestinales", label: "Ansiedad (pregunta 11)" },
+      { name: "Genitourinarios", label: "Ansiedad (pregunta 12)" },
+      { name: "Autonomos", label: "Ansiedad (pregunta 13)" },
+    ];
+
+    const getMissing = () => requiredGroups.find(group => !document.querySelector(`input[name="${group.name}"]:checked`));
+    const getAnsweredCount = () => requiredGroups.filter(group => document.querySelector(`input[name="${group.name}"]:checked`)).length;
+
+    const clearInlineError = () => {
+      if (!inlineError) return;
+      inlineError.textContent = "";
+      inlineError.classList.add("hidden");
+    };
+
+    const showInlineError = (message) => {
+      if (!inlineError) return;
+      inlineError.textContent = message;
+      inlineError.classList.remove("hidden");
+    };
+
+    const clearRowHighlights = () => {
+      document.querySelectorAll(".field-error").forEach(row => row.classList.remove("field-error"));
+    };
+
+    const highlightRow = (input) => {
+      const row = input?.closest("tr");
+      if (row) row.classList.add("field-error");
+    };
+
+    const updateProgress = () => {
+      const answered = getAnsweredCount();
+      const total = requiredGroups.length;
+      const percent = Math.round((answered / total) * 100);
+      if (progressBar) progressBar.style.width = `${percent}%`;
+      if (progressText) progressText.textContent = `${answered} de ${total} respondidas`;
+    };
+
+    updateProgress();
+
+    document.querySelectorAll("input[type=\"radio\"]").forEach(input => {
+      input.addEventListener("change", () => {
+        const row = input.closest("tr");
+        if (row) row.classList.remove("field-error");
+        clearInlineError();
+        updateProgress();
+      });
+    });
+
+    form.addEventListener("submit", function (event) {
+      if (isSubmitting) return;
+      const missing = getMissing();
+      if (missing) {
+        event.preventDefault();
+        clearRowHighlights();
+        const firstInput = document.querySelector(`input[name="${missing.name}"]`);
+        if (firstInput) {
+          highlightRow(firstInput);
+          firstInput.scrollIntoView({ behavior: "smooth", block: "center" });
+          firstInput.focus();
+        }
+        showInlineError(`Falta responder: ${missing.label}.`);
+        Swal.fire({
+          icon: "warning",
+          title: "Falta una respuesta",
+          text: `Por favor selecciona una opción en: ${missing.label}.`,
+        });
+        return;
+      }
+
+      event.preventDefault();
+      const answered = getAnsweredCount();
+      const total = requiredGroups.length;
       Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu Genero!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Edad"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu Edad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Humordepresivo"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Sentimientoculpa"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Suicidio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Insomnioprecoz"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Insomniointermedio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Insomniotardio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Trabajoactividades"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Inhibicionpsicomotora"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Agitacionpsicomotora"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Ansiedadpsiquica"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Ansiedadsomatica"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Somaticosgastrointestinales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Somaticosgenerales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Genitales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 14 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Hipocondria"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 15 en los sintomas de depresion!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Peso"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 16 en los sintomas de depresion!'
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Introspeccion"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 17 en los sintomas de depresion!'
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    /*Para los sintomas de la ansiedad*/
-
-    if (!document.querySelector('input[name="Estadoansioso"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 1 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Tension"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 2 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Temores"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 3 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Insomnio"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 4 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Intelectual"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 5 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Estadodeprimido"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 6 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Musculares"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 7 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Sensoriales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 8 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Cardiovasculares"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 9 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-    if (!document.querySelector('input[name="Respiratorios"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 10 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Gastrointestinales"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 11 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Genitourinarios"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 12 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-    if (!document.querySelector('input[name="Autonomos"]:checked')) {
-      Swal.fire({
-        icon: 'warning',
-        title: '¡Olvidaste seleccionar tu opción en la pregunta 13 en los sintomas de ansiedad!',
-      })
-      hasError = true;
-    }
-    // si hay algún error no efectuamos la acción submit del form
-    if (hasError) event.preventDefault();
-
-
-
-  });
-
+        icon: "info",
+        title: "Resumen antes de enviar",
+        html: `Has respondido <b>${answered}</b> de <b>${total}</b> preguntas. ¿Deseas enviar tu evaluación?`,
+        showCancelButton: true,
+        confirmButtonText: "Enviar",
+        cancelButtonText: "Revisar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          isSubmitting = true;
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Procesando...";
+            submitBtn.classList.add("opacity-70", "cursor-not-allowed");
+          }
+          form.submit();
+        }
+      });
+    });
+  })();
 </script>
 
-<style>
-  body {
-    background-image: white;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    align-items: center;
-    justify-content: center;
-    margin: 0px;
-    padding: 0px;
-    height: 10px;
-
-  }
-
-  #quiz {
-    justify-content: center;
-    align-items: center;
-    /*background: url(/static/img/Fondo.jpg) repeat;*/
-    background: white;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    width: 80%;
-    padding: 5%;
-    margin: 10%;
-    text-align: justify;
-    font-family: Arial, Helvetica, sans-serif;
-
-
-    padding: 3px 10px;
-    /* border: black 5px solid;*/
-    border-radius: 20px;
-
-  }
-
-  #botonenviar {
-    background-color: #ffffff;
-    color: black;
-    width: 250px;
-    font-size: 20px;
-    border-radius: 0.3rem;
-    padding: 10px 20px;
-    margin: 10px 4px 10px;
-    outline: 0;
-
-
-  }
-
-  #botonenviar:hover {
-    /*opacity: 0.5;*/
-    cursor: pointer !important;
-    background: #4ab4ff;
-  }
-
-  h2 {
-    font-size: 50px;
-    text-align: center;
-  }
-
-  h4 {
-    font-size: 20px;
-    text-align: justify;
-  }
-
-
-  #Limpiar {
-    background-color: #ffffff;
-    color: black;
-    width: 250px;
-    font-size: 20px;
-    border-radius: 0.3rem;
-    padding: 10px 20px;
-    margin: 10px 4px 10px;
-    outline: 0;
-  }
-
-  #Limpiar:hover {
-    /*opacity: 0.5;*/
-    cursor: pointer !important;
-    background: #4ab4ff;
-  }
-</style>
-
+</section>
 {% endblock %}

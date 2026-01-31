@@ -1,0 +1,324 @@
+{% extends "Index.html" %}
+
+{% block content %}
+<section class="space-y-8">
+  <div class="section-card bg-gradient-to-br from-white to-sky-50">
+    <div class="section-header">
+      <div class="space-y-2">
+        <span class="pill">Contacto</span>
+        <h2>Agenda tu cita</h2>
+        <p class="text-slate-600">Estamos para ayudarte. Contáctanos y te orientamos sobre el siguiente paso.</p>
+      </div>
+      <a class="btn-primary" href="/Test">Realizar evaluación</a>
+    </div>
+  </div>
+
+  <div class="section-card" id="buscador-psicologos">
+    <div class="section-header">
+      <div>
+        <h3 class="section-title">Buscador de psicólogos</h3>
+        <p class="section-subtitle">Filtra por nombre, especialidad o ubicación.</p>
+      </div>
+      <button class="btn-secondary" type="button">Limpiar filtros</button>
+    </div>
+    <div class="mt-5 grid gap-4 md:grid-cols-3">
+      <label class="block">
+        <span class="text-xs font-semibold text-slate-600">Buscar por nombre</span>
+        <input
+          id="psicologo-search"
+          class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-sky-400 focus:outline-none"
+          type="text"
+          placeholder="Ej. Mariana López"
+        />
+      </label>
+      <label class="block">
+        <span class="text-xs font-semibold text-slate-600">Especialidad</span>
+        <select
+          id="psicologo-especialidad"
+          class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-sky-400 focus:outline-none"
+        >
+          <option>Selecciona una opción</option>
+          <option>Ansiedad y depresión</option>
+          <option>Terapia familiar y de pareja</option>
+          <option>Intervención en crisis</option>
+          <option>Manejo del estrés</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-xs font-semibold text-slate-600">Ubicación</span>
+        <select
+          id="psicologo-ubicacion"
+          class="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm focus:border-sky-400 focus:outline-none"
+        >
+          <option>Selecciona una sede</option>
+          <option>Reforma</option>
+          <option>Norte</option>
+          <option>Central</option>
+          <option>Sur</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <h3 class="section-title">Profesionales disponibles</h3>
+    <p class="section-subtitle">Selecciona a tu especialista y agenda directamente por su WhatsApp.</p>
+    <div id="psicologo-list" class="mt-5 grid gap-4 lg:grid-cols-2">
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5" data-nombre="mariana lópez" data-especialidad="ansiedad y depresión" data-ubicacion="reforma">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-mariana-lopez.jpg"
+              alt="Foto de la psicóloga Mariana López"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Mariana López</p>
+              <p class="text-xs text-slate-500">Terapia cognitivo-conductual · Ansiedad y depresión</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Av. Reforma 250, Consultorio 3
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 55 1111 2222
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Vie 9:00–15:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+525511112222">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/525511112222" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5" data-nombre="daniel hernández" data-especialidad="terapia familiar y de pareja" data-ubicacion="norte">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologo-daniel-hernandez.jpg"
+              alt="Foto del psicólogo Daniel Hernández"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Daniel Hernández</p>
+              <p class="text-xs text-slate-500">Terapia familiar y de pareja · Adolescencia</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Calle Norte 18, Piso 2
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 33 4444 5555
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Mar–Sáb 10:00–18:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+523344445555">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/523344445555" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5" data-nombre="valeria cruz" data-especialidad="intervención en crisis" data-ubicacion="central">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-valeria-cruz.jpg"
+              alt="Foto de la psicóloga Valeria Cruz"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Valeria Cruz</p>
+              <p class="text-xs text-slate-500">Intervención en crisis · Manejo del estrés</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Blvd. Central 501, Consultorio 8
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 81 7777 8888
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Vie 12:00–20:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+528177778888">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/528177778888" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="flex h-full flex-col rounded-2xl border border-slate-100 bg-slate-50 p-5" data-nombre="carla jiménez" data-especialidad="manejo del estrés" data-ubicacion="sur">
+          <div class="flex items-start gap-4">
+            <img
+              class="h-16 w-16 rounded-2xl object-cover"
+              src="/static/img/psicologa-carla-jimenez.jpg"
+              alt="Foto de la psicóloga Carla Jiménez"
+              onerror="this.onerror=null;this.src='/static/img/avatar-default.svg';"
+            />
+            <div class="space-y-2">
+              <p class="text-sm font-semibold text-slate-800">Psic. Carla Jiménez</p>
+              <p class="text-xs text-slate-500">Psicoeducación · Atención integral</p>
+            </div>
+          </div>
+          <div class="mt-3 space-y-2 text-xs text-slate-600">
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-slate-400"></span>
+              Ubicación: Plaza Sur 22, Torre B
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              WhatsApp: +52 55 9999 0000
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-sky-500"></span>
+              Horario: Lun–Sáb 8:00–14:00
+            </div>
+          </div>
+          <div class="mt-auto pt-4">
+            <div class="flex flex-wrap gap-3">
+              <a class="btn-primary" href="tel:+525599990000">Agendar cita</a>
+              <a class="btn-secondary" href="https://wa.me/525599990000" target="_blank" rel="noopener">WhatsApp</a>
+            </div>
+          </div>
+        </article>
+    </div>
+    <p id="psicologo-empty" class="mt-4 hidden text-sm text-slate-500">No hay resultados con esos filtros.</p>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <div>
+        <h3 class="section-title">Reseñas y calificación</h3>
+        <p class="section-subtitle">Opiniones recientes de pacientes (modo demo).</p>
+      </div>
+      <span class="pill">4.8/5 promedio</span>
+    </div>
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      <article class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm font-semibold text-slate-800">Psic. Mariana López</p>
+          <span class="text-sm text-amber-500">★★★★★</span>
+        </div>
+        <p class="mt-3 text-sm text-slate-600">“Me sentí acompañada desde la primera sesión. Muy profesional.”</p>
+        <p class="mt-4 text-xs text-slate-500">Paciente · Enero 2026</p>
+      </article>
+      <article class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm font-semibold text-slate-800">Psic. Daniel Hernández</p>
+          <span class="text-sm text-amber-500">★★★★☆</span>
+        </div>
+        <p class="mt-3 text-sm text-slate-600">“Nos ayudó a mejorar la comunicación en pareja.”</p>
+        <p class="mt-4 text-xs text-slate-500">Paciente · Enero 2026</p>
+      </article>
+      <article class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm font-semibold text-slate-800">Psic. Valeria Cruz</p>
+          <span class="text-sm text-amber-500">★★★★★</span>
+        </div>
+        <p class="mt-3 text-sm text-slate-600">“Intervención rápida y clara. Me sentí más tranquila.”</p>
+        <p class="mt-4 text-xs text-slate-500">Paciente · Enero 2026</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <div class="section-card">
+      <h3 class="section-title">Testimonios</h3>
+      <p class="section-subtitle">Historias reales de bienestar emocional.</p>
+      <div class="mt-5 space-y-4">
+        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <p class="text-sm text-slate-600">“El proceso fue claro y humano. Me ayudó a organizar mis emociones.”</p>
+          <p class="mt-3 text-xs font-semibold text-slate-700">Andrea M.</p>
+        </div>
+        <div class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+          <p class="text-sm text-slate-600">“Me dio confianza saber que podía agendar por WhatsApp y recibir respuesta.”</p>
+          <p class="mt-3 text-xs font-semibold text-slate-700">Luis R.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <h3 class="section-title">Preguntas frecuentes (FAQ)</h3>
+      <p class="section-subtitle">Resolvemos tus dudas antes de agendar.</p>
+      <div class="mt-5 space-y-3 text-sm text-slate-600">
+        <details class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
+          <summary class="cursor-pointer font-semibold text-slate-800">¿Cómo agendo una cita?</summary>
+          <p class="mt-2">Elige a tu psicólogo y presiona “Agendar cita” o “WhatsApp”.</p>
+        </details>
+        <details class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
+          <summary class="cursor-pointer font-semibold text-slate-800">¿La información es confidencial?</summary>
+          <p class="mt-2">Sí, toda la comunicación y datos se manejan de forma privada.</p>
+        </details>
+        <details class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3">
+          <summary class="cursor-pointer font-semibold text-slate-800">¿Puedo cambiar de especialista?</summary>
+          <p class="mt-2">Puedes elegir al profesional que mejor se adapte a tus necesidades.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warning" role="alert">
+    <strong>Si estás en crisis:</strong> busca ayuda inmediata en los servicios de emergencia de tu localidad.
+  </div>
+</section>
+
+<script>
+  const searchInput = document.getElementById('psicologo-search');
+  const especialidadSelect = document.getElementById('psicologo-especialidad');
+  const ubicacionSelect = document.getElementById('psicologo-ubicacion');
+  const psicologoCards = Array.from(document.querySelectorAll('#psicologo-list article'));
+  const emptyState = document.getElementById('psicologo-empty');
+
+  const normalizar = (texto) => (texto || '').toLowerCase().trim();
+
+  const aplicarFiltros = () => {
+    const nombre = normalizar(searchInput.value);
+    const especialidad = normalizar(especialidadSelect.value);
+    const ubicacion = normalizar(ubicacionSelect.value);
+
+    let visibles = 0;
+    psicologoCards.forEach((card) => {
+      const cardNombre = normalizar(card.dataset.nombre);
+      const cardEspecialidad = normalizar(card.dataset.especialidad);
+      const cardUbicacion = normalizar(card.dataset.ubicacion);
+
+      const matchNombre = !nombre || cardNombre.includes(nombre);
+      const matchEspecialidad = !especialidad || especialidad === 'selecciona una opción' || cardEspecialidad.includes(especialidad);
+      const matchUbicacion = !ubicacion || ubicacion === 'selecciona una sede' || cardUbicacion.includes(ubicacion);
+
+      const visible = matchNombre && matchEspecialidad && matchUbicacion;
+      card.classList.toggle('hidden', !visible);
+      if (visible) visibles += 1;
+    });
+
+    emptyState.classList.toggle('hidden', visibles > 0);
+  };
+
+  [searchInput, especialidadSelect, ubicacionSelect].forEach((control) => {
+    control.addEventListener('input', aplicarFiltros);
+    control.addEventListener('change', aplicarFiltros);
+  });
+</script>
+{% endblock %}
