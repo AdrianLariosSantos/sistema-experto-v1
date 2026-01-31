@@ -11,7 +11,7 @@ except Exception:
         raise RuntimeError(
             "No se encontró load_dotenv. Instala 'python-dotenv' y desinstala el paquete 'dotenv' si existe."
         ) from exc
-from AlgoritmoBayes import *
+from bayes_model import clase_Ansiedad, clase_Depresion
 #import matplotlib.pyplot as plt
 
 load_dotenv()
@@ -38,43 +38,60 @@ def home():
 @app.route('/Test', methods=['GET', 'POST'])
 def test():
     if request.method == 'POST':
+        def get_value(key):
+            value = request.form.get(key)
+            if value is None or value == "":
+                return None
+            return str(value)
+
         # Primero dos datos.
-        genero = request.form.getlist('Genero')
-        edad = request.form.getlist('Edad')
+        genero = get_value('Genero')
+        edad = get_value('Edad')
 
         # Cuestionario de los Sintomas de la Depresion.
-        humordepresivo = str(request.form.getlist('Humordepresivo')[0])
-        sentimientoculpa = str(request.form.getlist('Sentimientoculpa')[0])
-        suicidio = str(request.form.getlist('Suicidio')[0])
-        insomnioprecoz = str(request.form.getlist('Insomnioprecoz')[0])
-        insomniointermedio = str(request.form.getlist('Insomniointermedio')[0])
-        insomniotardio = str(request.form.getlist('Insomniotardio')[0])
-        trabajo = str(request.form.getlist('Trabajoactividades')[0])
-        inhibicion = str(request.form.getlist('Inhibicionpsicomotora')[0])
-        agitacion = str(request.form.getlist('Agitacionpsicomotora')[0])
-        ansiedadpsiquica = str(request.form.getlist('Ansiedadpsiquica')[0])
-        ansiedadsomatica = str(request.form.getlist('Ansiedadsomatica')[0])
-        somaticosgastrointestinales = str(request.form.getlist('Somaticosgastrointestinales')[0])
-        somaticosgenerales = str(request.form.getlist('Somaticosgenerales')[0])
-        genitales = str(request.form.getlist('Genitales')[0])
-        hipocondria = str(request.form.getlist('Hipocondria')[0])
-        peso = str(request.form.getlist('Peso')[0])
-        introspeccion = str(request.form.getlist('Introspeccion')[0])
+        humordepresivo = get_value('Humordepresivo')
+        sentimientoculpa = get_value('Sentimientoculpa')
+        suicidio = get_value('Suicidio')
+        insomnioprecoz = get_value('Insomnioprecoz')
+        insomniointermedio = get_value('Insomniointermedio')
+        insomniotardio = get_value('Insomniotardio')
+        trabajo = get_value('Trabajoactividades')
+        inhibicion = get_value('Inhibicionpsicomotora')
+        agitacion = get_value('Agitacionpsicomotora')
+        ansiedadpsiquica = get_value('Ansiedadpsiquica')
+        ansiedadsomatica = get_value('Ansiedadsomatica')
+        somaticosgastrointestinales = get_value('Somaticosgastrointestinales')
+        somaticosgenerales = get_value('Somaticosgenerales')
+        genitales = get_value('Genitales')
+        hipocondria = get_value('Hipocondria')
+        peso = get_value('Peso')
+        introspeccion = get_value('Introspeccion')
 
         # Cuestionario de los Sintomas de la Ansiedad
-        estadoansioso = str(request.form.getlist('Estadoansioso')[0])
-        tension = str(request.form.getlist('Tension')[0])
-        temores = str(request.form.getlist('Temores')[0])
-        insomnio = str(request.form.getlist('Insomnio')[0])
-        intelectual = str(request.form.getlist('Intelectual')[0])
-        estadodeprimido = str(request.form.getlist('Estadodeprimido')[0])
-        musculares = str(request.form.getlist('Musculares')[0])
-        sensoriales = str(request.form.getlist('Sensoriales')[0])
-        cardiovasculares = str(request.form.getlist('Cardiovasculares')[0])
-        respiratorios = str(request.form.getlist('Respiratorios')[0])
-        gastrointestinales = str(request.form.getlist('Gastrointestinales')[0])
-        genitourinarios = str(request.form.getlist('Genitourinarios')[0])
-        autonomos = str(request.form.getlist('Autonomos')[0])
+        estadoansioso = get_value('Estadoansioso')
+        tension = get_value('Tension')
+        temores = get_value('Temores')
+        insomnio = get_value('Insomnio')
+        intelectual = get_value('Intelectual')
+        estadodeprimido = get_value('Estadodeprimido')
+        musculares = get_value('Musculares')
+        sensoriales = get_value('Sensoriales')
+        cardiovasculares = get_value('Cardiovasculares')
+        respiratorios = get_value('Respiratorios')
+        gastrointestinales = get_value('Gastrointestinales')
+        genitourinarios = get_value('Genitourinarios')
+        autonomos = get_value('Autonomos')
+
+        required_values = [
+            genero, edad, humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio,
+            insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica,
+            somaticosgastrointestinales, somaticosgenerales, genitales, hipocondria, peso, introspeccion,
+            estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales,
+            cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos
+        ]
+
+        if any(value is None for value in required_values):
+            return render_template('Test.html', error='Completa todas las preguntas para continuar.'), 400
 
         # Algoritmo de Bayes Ingenuo
         ListaPC1 = []
@@ -94,25 +111,18 @@ def test():
 
         Probabilidad_PC2 = ListaPC2[0]/Sumatoria
         
-        Pro_PC1 = ""
-        Pro_PC2 = ""
-
         if Probabilidad_PC1 > Probabilidad_PC2:
             Resultado_Final = "Depresion"
         else:
             Resultado_Final = "Ansiedad"
 
         # Se realiza la conexion.
-        cur = mysql.connection.cursor()
-        try:
+        with mysql.connection.cursor() as cur:
             # Se executa el comando insert para guardar los nuevos datos introducidos por el usuario
             cur.execute('INSERT INTO conocimiento (Genero, Edad, Humor, Culpa, Suicidio, IPrecoz, IIntermedio, ITardio, Trabajo, Inhibicion, Agitacion, APsiquica, ASomatica, SGastrointestinales, SGenerales, SGenitales, Hipocondria, Peso, Introspeccion, AnimoAnsioso, Tension, Temores, Insomnio, Intelectual, AnimoDeprimido, SomaticosMusculares, SomaticosSensoriales, Cardiovasculares, Respiratorios, Gastrointestinales, Genitourinarios, Autonomos, Clase) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s ,%s, %s)',
                         (genero, edad, humordepresivo, sentimientoculpa, suicidio, insomnioprecoz, insomniointermedio, insomniotardio, trabajo, inhibicion, agitacion, ansiedadpsiquica, ansiedadsomatica, somaticosgastrointestinales, somaticosgenerales, genitales, hipocondria, peso, introspeccion, estadoansioso, tension, temores, insomnio, intelectual, estadodeprimido, musculares, sensoriales, cardiovasculares, respiratorios, gastrointestinales, genitourinarios, autonomos, Resultado_Final))
-
             # Se ejecuta con el comando con el metodo commit
             mysql.connection.commit()
-        finally:
-            cur.close()
         
         return render_template('Ayuda.html', Resultado_Final = Resultado_Final)
         
